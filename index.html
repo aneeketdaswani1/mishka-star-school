@@ -350,6 +350,16 @@ h3.sec { font-size: 1.45rem; margin-top: 6px; }
   .prog-meter { grid-column: 1 / -1; }
 }
 
+/* voice settings */
+.voice-grid { display: grid; gap: 10px; }
+.voice-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; align-items: center; background: var(--sky); border: 2px solid var(--soft); border-radius: 14px; padding: 10px; }
+.voice-row > span { grid-column: 1 / -1; font-weight: 700; }
+.voice-row select { min-width: 0; width: 100%; font: inherit; font-size: 1rem; padding: 8px; border: 2px solid var(--ink); border-radius: 10px; background: var(--card); color: var(--ink); }
+.voice-speed { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; font-weight: 700; }
+.voice-speed input { width: 100%; accent-color: var(--rose); }
+.voice-tips summary { cursor: pointer; font-weight: 700; }
+.voice-tips li { font-size: .92rem; margin-bottom: 4px; }
+
 /* quiz */
 .quiz { display: grid; gap: 16px; justify-items: center; text-align: center; }
 .q-dots { display: flex; gap: 6px; }
@@ -502,7 +512,7 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
 
     <details class="grownups">
       <summary>For grown-ups</summary>
-      <button class="btn blue" data-go="progress" style="margin-top:10px">📊 See Mishka's progress</button>
+      <div class="btn-row" style="margin-top:10px"><button class="btn blue" data-go="progress">📊 See Mishka's progress</button><button class="btn white" data-open-voice>🎙️ Voice &amp; speed</button></div>
       <p>Activities follow typical Oxford Class 1 topics used in Pakistani schools: phonics and letter sounds, sight words, days of the week, opposites, masculine and feminine words, counting to 20, addition and subtraction within 10, number order, comparing numbers and 2D shapes. Check her school book list to match the exact units.</p>
       <ul>
         <li>Sindhi words are shown with English-letter spelling to help her say them. Please check them with her Sindhi teacher; the voice reads the English spelling, not true Sindhi sounds. Words the translator looks up beyond the word cards come from Claude.</li>
@@ -526,7 +536,7 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
     <div class="panel speak-panel">
       <h3>Speak English</h3>
       <p class="hint">Learn how to say words, what they mean, and how British and American English sound different. Her Oxford books use British English.</p>
-      <div class="btn-row"><button class="btn pink" data-game="sayit">🗣️ Say It Right</button><button class="btn blue" data-game="sounds">👄 Sound Tricks</button></div>
+      <div class="btn-row"><button class="btn pink" data-game="sayit">🗣️ Say It Right</button><button class="btn blue" data-game="sounds">👄 Sound Tricks</button><button class="btn white" data-open-voice>🎙️ Voice &amp; speed</button></div>
       <div id="engAccent"></div>
     </div>
     <div class="panel">
@@ -722,6 +732,25 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
   </section>
 </main>
 
+<div class="rec-overlay" id="voiceDlg" hidden role="dialog" aria-modal="true" aria-labelledby="voiceTitle">
+  <div class="rec-box">
+    <div class="rec-head"><b id="voiceTitle">🎙️ Voice &amp; speed</b><button class="btn white" id="voiceClose">✕ Close</button></div>
+    <p class="hint" style="margin:0">Pick the voice Mishka likes best. Tap Try to hear it.</p>
+    <div class="voice-grid" id="voiceGrid"></div>
+    <label class="voice-speed" for="voiceRate"><span>Speed</span><input type="range" id="voiceRate" min="0.5" max="1" step="0.05"><span id="voiceRateLabel"></span></label>
+    <div class="btn-row" style="justify-content:center"><button class="btn go" id="voiceTry">🔊 Try it</button><button class="btn white" id="voiceReset">Use the best voices</button></div>
+    <details class="voice-tips"><summary>Want a sweeter voice?</summary>
+      <ul>
+        <li><b>iPad / iPhone:</b> Settings › Accessibility › Spoken Content › Voices › English. Download <b>Serena (Enhanced)</b> or <b>Kate (Enhanced)</b>. For Urdu and Sindhi, also download <b>Lekha</b> under Hindi.</li>
+        <li><b>Android:</b> Settings › Accessibility › Text-to-speech. Choose Google, then install voice data for English (UK) and Hindi or Urdu.</li>
+        <li><b>Windows:</b> open the app in Microsoft Edge for its natural voices (Libby, Sonia, Swara).</li>
+        <li><b>Mac:</b> System Settings › Accessibility › Spoken Content › System voice › Manage voices. Add <b>Serena</b>, <b>Kate</b> or <b>Lekha</b>.</li>
+      </ul>
+      <p class="hint">After adding a voice, close and reopen the app.</p>
+    </details>
+  </div>
+</div>
+
 <div class="rec-overlay" id="trDlg" hidden role="dialog" aria-modal="true" aria-labelledby="trTitle">
   <div class="rec-box">
     <div class="rec-head"><b id="trTitle">🌐 Translator</b><button class="btn white" id="trClose">✕ Close</button></div>
@@ -781,23 +810,63 @@ let voices = [];
 function loadVoices() { try { voices = speechSynthesis.getVoices(); } catch (e) {} }
 if ("speechSynthesis" in window) { loadVoices(); try { speechSynthesis.onvoiceschanged = loadVoices; } catch (e) {} }
 let accent = store.get("accent", "en-GB");
-function say(text, lang = accent, rate = 0.85) {
-  try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    const v = voices.find(v => v.lang === lang) || voices.find(v => v.lang.replace("_", "-").startsWith(lang.slice(0, 2)));
-    if (v) u.voice = v;
-    u.lang = lang; u.rate = rate; u.pitch = 1.1;
-    speechSynthesis.speak(u);
-  } catch (e) {}
+/* Voice choice: skip the robotic novelty voices and prefer warm, natural-sounding female voices.
+   Grown-ups can override the choice and the speed in Voice & speed. */
+const BAD_VOICE = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|\bfred\b|good news|hysterical|jester|junior|kathy|organ|ralph|superstar|trinoids|whisper|wobble|zarvox|grandpa|grandma|rocko|shelley|sandy|reed|eddy|\bflo\b/i;
+const SWEET = ["google uk english female", "libby", "sonia", "maisie", "serena", "kate", "stephanie", "martha", "moira", "tessa", "karen", "samantha", "ava", "allison", "susan", "zoe", "aria", "jenny", "michelle", "emma", "google us english", "veena", "zira", "lekha", "swara", "kiyara", "uzma", "google हिन्दी", "google اردو"];
+const langOf = v => v.lang.replace("_", "-").toLowerCase();
+function voiceScore(v, want) {
+  const n = v.name.toLowerCase(); let sc = 0;
+  const i = SWEET.findIndex(k => n.includes(k)); if (i >= 0) sc += 100 - i;
+  if (/natural|neural|premium|enhanced/.test(n)) sc += 40;
+  if (/female|woman/.test(n)) sc += 20;
+  if (/\bmale\b|daniel|arthur|oliver|alex|\btom\b|aaron|rishi|ryan|guy|david|mark|george|asad/.test(n) && !/female/.test(n)) sc -= 40;
+  if (langOf(v) === want) sc += 30;
+  return sc;
 }
-const sayLocal = t => say(t, "en-IN");
-const hasVoice = lang => voices.some(v => v.lang.replace("_", "-").toLowerCase().startsWith(lang.toLowerCase()));
+function voicesFor(lang, strict) {
+  const want = lang.toLowerCase(), base = want.slice(0, 2);
+  let list = voices.filter(v => !BAD_VOICE.test(v.name) && langOf(v).startsWith(base));
+  if (strict && list.some(v => langOf(v) === want)) list = list.filter(v => langOf(v) === want);
+  return list.sort((a, b) => voiceScore(b, want) - voiceScore(a, want));
+}
+let voicePrefs = store.get("voicePrefs", {});
+let voiceRate = store.get("voiceRate", 0.75);
+const prefKey = lang => (lang.startsWith("en") ? lang : lang.slice(0, 2));
+function pickVoice(lang, strict) { const list = voicesFor(lang, strict), pref = !strict && voicePrefs[prefKey(lang)]; return (pref && list.find(v => v.name === pref)) || list[0] || null; }
+let sayToken = 0;
+/* Speak the first candidate that works. If a voice fails or never starts (some phones list voices
+   they can't actually play), move on to the next candidate. */
+function speakChain(cands, rate) {
+  if (!("speechSynthesis" in window) || !cands.length) return;
+  const my = ++sayToken;
+  try { speechSynthesis.cancel(); speechSynthesis.resume(); } catch (e) { return; }
+  const tryAt = i => {
+    if (my !== sayToken || i >= cands.length) return;
+    const c = cands[i]; let started = false, timer = 0;
+    const next = () => { if (my !== sayToken || started) return; clearTimeout(timer); try { speechSynthesis.cancel(); } catch (e) {} tryAt(i + 1); };
+    try {
+      const u = new SpeechSynthesisUtterance(c.text);
+      const v = pickVoice(c.lang, c.strict); if (v) u.voice = v;
+      u.lang = v ? v.lang : c.lang; u.rate = Math.min(1.2, Math.max(0.35, rate)); u.pitch = c.pitch || 1.12;
+      u.onstart = () => { started = true; clearTimeout(timer); };
+      u.onerror = e => { if (e.error !== "interrupted" && e.error !== "canceled") next(); };
+      if (i + 1 < cands.length) timer = setTimeout(() => { if (!speechSynthesis.speaking) next(); }, 2500);
+      window.__lastUtterance = u;
+      speechSynthesis.speak(u);
+    } catch (e) { next(); }
+  };
+  tryAt(0);
+}
+const rateFor = r => (r == null ? 0.85 : r) * (voiceRate / 0.85);
+function say(text, lang = accent, rate, strict) { speakChain([{ text, lang, strict }], rateFor(rate)); }
+const sayLocal = t => say(t, "en-IN", undefined, true);
+const hasVoice = lang => voicesFor(lang).length > 0;
 function setAccent(a) {
   accent = a; store.set("accent", a);
   $$("[data-acc]").forEach(b => b.setAttribute("aria-selected", b.dataset.acc === a));
-  say(a === "en-US" ? "Hi Mishka! This is American English." : "Hello Mishka! This is British English.");
-  if (voices.length && !hasVoice(a)) toast("This device doesn't have that voice, so you'll hear the closest one.");
+  say(a === "en-US" ? "Hi Mishka! This is American English." : "Hello Mishka! This is British English.", a, undefined, true);
+  if (voices.length && !voices.some(v => langOf(v) === a.toLowerCase())) toast("This device doesn't have that voice, so you'll hear the closest one.");
 }
 /* Read a question aloud in Urdu or Sindhi. The screen stays in English.
    Urdu uses an Urdu voice when the device has one, otherwise a Hindi voice reading the same words
@@ -808,8 +877,10 @@ const sdn = n => (n >= 1 && n <= 20 ? SDN[n] : String(n));
 const URD = ["پیر", "منگل", "بدھ", "جمعرات", "جمعہ", "ہفتہ", "اتوار"], HID = ["पीर", "मंगल", "बुध", "जुमेरात", "जुमा", "हफ़्ता", "इतवार"], SDD = ["सूमर", "अंगारो", "अर्बा", "ख़मीस", "जुमो", "छंछर", "आचर"];
 function sayIn(lang, ml) {
   if (!ml) return;
-  if (lang === "ur" && hasVoice("ur")) return say(ml.ur, "ur-PK", 0.85);
-  if (hasVoice("hi")) return say(lang === "ur" ? ml.hi : ml.sd, "hi-IN", 0.85);
+  const c = [];
+  if (lang === "ur" && hasVoice("ur")) c.push({ text: ml.ur, lang: "ur-PK" });
+  if (hasVoice("hi")) c.push({ text: lang === "ur" ? ml.hi : ml.sd, lang: "hi-IN", pitch: 1.05 });
+  if (c.length) return speakChain(c, rateFor(0.8));
   toast(`This device has no ${lang === "ur" ? "Urdu" : "Sindhi"} voice yet. Add a Hindi or Urdu voice in the device's text-to-speech settings.`);
 }
 const langBtns = (cls = "btn white") => `<button class="${cls}" data-ml="ur">🔊 Urdu</button><button class="${cls}" data-ml="sd">🔊 Sindhi</button>`;
@@ -1114,6 +1185,7 @@ document.addEventListener("click", e => {
   const ro = e.target.closest("[data-rec-open]"); if (ro) { openRecorder(ro.dataset.recOpen); return; }
   const gf = e.target.closest("[data-gift]"); if (gf) { openGift(gf); return; }
   const ot = e.target.closest("[data-open-tr]"); if (ot) { openTranslator(); return; }
+  const ov = e.target.closest("[data-open-voice]"); if (ov) { openVoice(); return; }
   const ac = e.target.closest("[data-acc]"); if (ac) { setAccent(ac.dataset.acc); return; }
 });
 $("#brand").addEventListener("click", () => go("home"));
@@ -1125,10 +1197,10 @@ const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i
 const GROUPS = { fruits: ["🍎", "🍌", "🍇", "🥭", "🍉", "🍊"], animals: ["🐶", "🐱", "🐄", "🐐", "🐴", "🐔"], vehicles: ["🚗", "🚌", "🚲", "🚂", "✈️", "🚤"], clothes: ["👕", "👗", "🧢", "👟", "🧦", "🧣"], weather: ["☀️", "🌧️", "⛄", "🌈", "⚡", "☁️"] };
 const GROUP_ONE = { fruits: "a fruit", animals: "an animal", vehicles: "something we ride in", clothes: "something we wear", weather: "weather" };
 const ML = {
-  phonics: q => q.d.x ? { ur: `${q.d.w} کے آخر میں کون سا حرف ہے؟`, hi: `${q.d.w} के आख़िर में कौन सा अक्षर है?`, sd: `${q.d.w} जे आख़िर में कहिड़ो अखरु आहे?` } : { ur: `${q.d.w} کس حرف سے شروع ہوتا ہے؟`, hi: `${q.d.w} किस अक्षर से शुरू होता है?`, sd: `${q.d.w} कहिड़े अखर सां शुरू थिए थो?` },
-  sight: q => ({ ur: `غور سے سنو، اور یہ لفظ ڈھونڈو: ${q.d.w}`, hi: `ग़ौर से सुनो, और ये शब्द ढूंढो: ${q.d.w}`, sd: `ध्यान सां बुधो, ऐं हीउ लफ़्ज़ गोल्हियो: ${q.d.w}` }),
+  phonics: q => q.d.x ? { ur: `${q.d.w} کے آخر میں کون سا حرف ہے؟`, hi: `${q.d.w} के आख़िर में कौन सा हर्फ़ है?`, sd: `${q.d.w} जे आख़िर में कहिड़ो अखरु आहे?` } : { ur: `${q.d.w} کس حرف سے شروع ہوتا ہے؟`, hi: `${q.d.w} किस हर्फ़ से शुरू होता है?`, sd: `${q.d.w} कहिड़े अखर सां शुरू थिए थो?` },
+  sight: q => ({ ur: `غور سے سنو، اور یہ لفظ ڈھونڈو: ${q.d.w}`, hi: `ग़ौर से सुनो, और ये लफ़्ज़ तलाश करो: ${q.d.w}`, sd: `ध्यान सां बुधो, ऐं हीउ लफ़्ज़ गोल्हियो: ${q.d.w}` }),
   days: q => { const i = q.d.i; return q.d.after ? { ur: `${URD[i]} کے بعد کون سا دن آتا ہے؟`, hi: `${HID[i]} के बाद कौन सा दिन आता है?`, sd: `${SDD[i]} खां पोइ कहिड़ो डींहुं ईंदो आहे?` } : { ur: `${URD[i]} سے پہلے کون سا دن آتا ہے؟`, hi: `${HID[i]} से पहले कौन सा दिन आता है?`, sd: `${SDD[i]} खां अगु कहिड़ो डींहुं ईंदो आहे?` }; },
-  gender: q => { const [m, f] = q.d.pair, he = q.answer === m, from = he ? f : m; return he ? { ur: `${from} کے لیے لڑکے والا لفظ کیا ہے؟`, hi: `${from} के लिए लड़के वाला शब्द क्या है?`, sd: `${from} लाइ छोकिरे वारो लफ़्ज़ कहिड़ो आहे?` } : { ur: `${from} کے لیے لڑکی والا لفظ کیا ہے؟`, hi: `${from} के लिए लड़की वाला शब्द क्या है?`, sd: `${from} लाइ छोकिरीअ वारो लफ़्ज़ कहिड़ो आहे?` }; },
+  gender: q => { const [m, f] = q.d.pair, he = q.answer === m, from = he ? f : m; return he ? { ur: `${from} کے لیے لڑکے والا لفظ کیا ہے؟`, hi: `${from} के लिए लड़के वाला लफ़्ज़ क्या है?`, sd: `${from} लाइ छोकिरे वारो लफ़्ज़ कहिड़ो आहे?` } : { ur: `${from} کے لیے لڑکی والا لفظ کیا ہے؟`, hi: `${from} के लिए लड़की वाला लफ़्ज़ क्या है?`, sd: `${from} लाइ छोकिरीअ वारो लफ़्ज़ कहिड़ो आहे?` }; },
   opposites: q => ({ ur: `${q.d.pair[0]} کا الٹ کیا ہے؟`, hi: `${q.d.pair[0]} का उल्टा क्या है?`, sd: `${q.d.pair[0]} जो उबतड़ छा आहे?` }),
   count: () => ({ ur: "گنو، یہ کتنے ہیں؟", hi: "गिनो, ये कितने हैं?", sd: "ग़णियो, हीअ केतिरा आहिनि?" }),
   add: q => ({ ur: `${q.d.a} جمع ${q.d.b} کتنے ہوتے ہیں؟`, hi: `${q.d.a} जमा ${q.d.b} कितने होते हैं?`, sd: `${sdn(q.d.a)} जमा ${sdn(q.d.b)} केतिरा थींदा?` }),
@@ -1140,9 +1212,9 @@ const ML = {
   money: () => ({ ur: "سکے گنو۔ کتنے روپے ہیں؟", hi: "सिक्के गिनो। कितने रुपये हैं?", sd: "सिक्का ग़णियो। केतिरा रुपया आहिनि?" }),
   pattern: q => q.d.kind === "num" ? { ur: `${q.d.seq.slice(0, 4).join("، ")}۔ اس کے بعد کون سا نمبر آئے گا؟`, hi: `${q.d.seq.slice(0, 4).join(", ")}। इसके बाद कौन सा नंबर आएगा?`, sd: `${q.d.seq.slice(0, 4).join(", ")}। हिन खां पोइ कहिड़ो नंबर ईंदो?` } : { ur: "پیٹرن دیکھو۔ اس کے بعد کیا آئے گا؟", hi: "पैटर्न देखो। इसके बाद क्या आएगा?", sd: "पैटर्न डिसो। हिन खां पोइ छा ईंदो?" },
   oddone: () => ({ ur: "ان میں سے کون سا الگ ہے؟", hi: "इनमें से कौन सा अलग है?", sd: "हिननि मां कहिड़ो अलग आहे?" }),
-  sdwords: () => ({ ur: "یہ لفظ کس تصویر کا ہے؟", hi: "ये शब्द किस तस्वीर का है?", sd: "हीउ लफ़्ज़ कहिड़ी तस्वीर जो आहे?" }),
+  sdwords: () => ({ ur: "یہ لفظ کس تصویر کا ہے؟", hi: "ये लफ़्ज़ किस तस्वीर का है?", sd: "हीउ लफ़्ज़ कहिड़ी तस्वीर जो आहे?" }),
   sdnums: () => ({ ur: "گنو، اور سندھی نمبر ڈھونڈو!", hi: "गिनो, और सिंधी नंबर ढूंढो!", sd: "ग़णियो, ऐं सिंधी नंबर गोल्हियो!" }),
-  sdcolors: () => ({ ur: "یہ لفظ کون سا رنگ ہے؟", hi: "ये शब्द कौन सा रंग है?", sd: "हीउ लफ़्ज़ कहिड़ो रंगु आहे?" })
+  sdcolors: () => ({ ur: "یہ لفظ کون سا رنگ ہے؟", hi: "ये लफ़्ज़ कौन सा रंग है?", sd: "हीउ लफ़्ज़ कहिड़ो रंगु आहे?" })
 };
 const coinHtml = c => `<span class="coin r${c}"><b>${c}</b><small>Rs</small></span>`;
 const clockSvg = (h, m) => {
@@ -1485,7 +1557,7 @@ function spell() {
       const [w, e] = words[wi]; let miss = false;
       const extra = shuffle("abcdefghijklmnoprstuw".split("").filter(c => !w.includes(c))).slice(0, 2);
       const tiles = shuffle([...w.split(""), ...extra]), filled = [];
-      const ml = { ur: `غور سے سنو اور اس لفظ کے ہجے بناؤ: ${w}`, hi: `ग़ौर से सुनो और इस शब्द के हिज्जे बनाओ: ${w}`, sd: `ध्यान सां बुधो ऐं हिन लफ़्ज़ जा हिज्जा ठाहियो: ${w}` };
+      const ml = { ur: `غور سے سنو اور اس لفظ کے ہجے بناؤ: ${w}`, hi: `ग़ौर से सुनो और इस लफ़्ज़ के हिज्जे बनाओ: ${w}`, sd: `ध्यान सां बुधो ऐं हिन लफ़्ज़ जा हिज्जा ठाहियो: ${w}` };
       host.innerHTML = `<div class="quiz"><h3>Spell It!</h3>
         <div class="q-dots">${words.map((_, k) => `<i class="${k < wi ? "done" : ""}"></i>`).join("")}</div>
         <div class="q-prompt">Tap the letters to spell the word.</div>
@@ -1950,7 +2022,7 @@ function sayit(startAt = 0) {
       $("#sHear", host).onclick = () => say(p.w);
       $("#sSlow", host).onclick = () => say(p.w, accent, 0.45);
       $("#sEx", host).onclick = () => say(p.ex);
-      $$("[data-demo]", host).forEach(b => b.onclick = () => say(p.w, b.dataset.demo, 0.75));
+      $$("[data-demo]", host).forEach(b => b.onclick = () => say(p.w, b.dataset.demo, 0.75, true));
       $("#sClap", host).onclick = () => {
         const chips = $$(".say-syl span", host); chips.forEach(c => c.classList.remove("on"));
         chips.forEach((c, k) => timers.push(setTimeout(() => { chips.forEach(x => x.classList.remove("on")); c.classList.add("on"); clapSound(); }, k * 650)));
@@ -2243,20 +2315,50 @@ $("#recSave").onclick = async () => {
   go("studio"); addStar(3); celebrate("Lights, camera, Mishka!");
 };
 $("#recApp").onclick = () => { pendingChallenge = rec.challenge; closeRecorder(); const inp = $("#vidInput"); inp.value = ""; inp.click(); };
-document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!$("#rec").hidden) closeRecorder(); else if (!$("#trDlg").hidden) closeTranslator(); });
+document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!$("#rec").hidden) closeRecorder(); else if (!$("#trDlg").hidden) closeTranslator(); else if (!$("#voiceDlg").hidden) closeVoice(); });
+
+/* ---------- voice & speed ---------- */
+const VOICE_ROWS = [["en-GB", "English (British)", "Hello Mishka! Shall we learn something fun today?"], ["en-US", "English (American)", "Hi Mishka! Shall we learn something fun today?"], ["hi", "Urdu & Sindhi reader (Hindi voice)", "मिश्का, आओ आज कुछ नया सीखें!"], ["ur", "Urdu voice", "مشکا، آؤ آج کچھ نیا سیکھیں!"]];
+function rateLabel(r) { return r <= 0.6 ? "Very slow 🐢" : r <= 0.75 ? "Slow and gentle" : r <= 0.9 ? "Medium" : "Normal"; }
+function renderVoice() {
+  loadVoices();
+  const rows = VOICE_ROWS.filter(([l]) => voicesFor(l).length || l === "en-GB");
+  $("#voiceGrid").innerHTML = rows.map(([l, label]) => {
+    const list = voicesFor(l).slice(0, 15), cur = pickVoice(l);
+    return `<label class="voice-row" for="vs-${l}"><span>${label}</span><select id="vs-${l}" data-vl="${l}">${list.length ? list.map(v => `<option value="${esc(v.name)}" ${cur && cur.name === v.name ? "selected" : ""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("") : `<option>No voice on this device</option>`}</select><button class="btn white" data-vtry="${l}">Try</button></label>`;
+  }).join("") || `<div class="empty">This browser has no voices yet. Try again in a moment.</div>`;
+  $("#voiceRate").value = voiceRate; $("#voiceRateLabel").textContent = rateLabel(voiceRate);
+}
+function tryVoice(l) { const row = VOICE_ROWS.find(r => r[0] === l); speakChain([{ text: row[2], lang: l === "hi" ? "hi-IN" : l === "ur" ? "ur-PK" : l, pitch: l.startsWith("en") ? 1.12 : 1.05 }], rateFor(0.85)); }
+function openVoice() { renderVoice(); $("#voiceDlg").hidden = false; document.body.style.overflow = "hidden"; }
+function closeVoice() { $("#voiceDlg").hidden = true; document.body.style.overflow = ""; }
+$("#voiceClose").onclick = closeVoice;
+$("#voiceDlg").addEventListener("click", e => { if (e.target.id === "voiceDlg") closeVoice(); });
+$("#voiceGrid").addEventListener("change", e => { const sel = e.target.closest("[data-vl]"); if (!sel) return; voicePrefs[prefKey(sel.dataset.vl)] = sel.value; store.set("voicePrefs", voicePrefs); tryVoice(sel.dataset.vl); });
+$("#voiceGrid").addEventListener("click", e => { const b = e.target.closest("[data-vtry]"); if (b) { e.preventDefault(); tryVoice(b.dataset.vtry); } });
+$("#voiceRate").addEventListener("input", e => { voiceRate = +e.target.value; store.set("voiceRate", voiceRate); $("#voiceRateLabel").textContent = rateLabel(voiceRate); });
+$("#voiceRate").addEventListener("change", () => tryVoice(accent));
+$("#voiceTry").onclick = () => tryVoice(accent);
+$("#voiceReset").onclick = () => { voicePrefs = {}; store.set("voicePrefs", voicePrefs); voiceRate = 0.75; store.set("voiceRate", voiceRate); renderVoice(); tryVoice(accent); };
 
 /* ---------- translator ---------- */
 const ALL_SD = Object.values(SINDHI).flat();
 const TR_CHIPS = ["cat", "mango", "water", "mother", "red", "hello", "thank you", "school"];
 const LANGS = {
-  sd: { name: "Sindhi", script: "the Arabic-based Sindhi script used in Sindh", voice: "sd", ex: '{"ok": true, "native": "ٻلي", "spelling": "billi", "english": "cat", "emoji": "🐱", "example": "The cat is sleeping."}' },
-  ur: { name: "Urdu", script: "Urdu script", voice: "ur", ex: '{"ok": true, "native": "بلی", "spelling": "billi", "english": "cat", "emoji": "🐱", "example": "The cat is sleeping."}' }
+  sd: { name: "Sindhi", script: "the Arabic-based Sindhi script used in Sindh", voice: "sd", ex: '{"ok": true, "native": "ٻلي", "deva": "बिली", "spelling": "billi", "english": "cat", "emoji": "🐱", "example": "The cat is sleeping."}' },
+  ur: { name: "Urdu", script: "Urdu script", voice: "ur", ex: '{"ok": true, "native": "بلی", "deva": "बिल्ली", "spelling": "billi", "english": "cat", "emoji": "🐱", "example": "The cat is sleeping."}' }
 };
 let trLang = "sd";
 function localLookup(q) { const s = q.trim().toLowerCase(); return ALL_SD.find(w => w[2].toLowerCase() === s || w[1].toLowerCase() === s || w[0] === q.trim()); }
 let sampleFn = null, trCtl = null;
 (async () => { try { sampleFn = window.claude && window.claude.use ? await window.claude.use("sample") : null; } catch (e) { sampleFn = null; } })();
-function sayNative(r) { const v = LANGS[r.lang].voice; if (r.native && hasVoice(v)) say(r.native, v === "ur" ? "ur-PK" : "sd-IN"); else if (r.spelling) sayLocal(r.spelling); else toast(`This device has no ${LANGS[r.lang].name} voice yet.`); }
+function sayNative(r) {
+  const v = LANGS[r.lang].voice, c = [];
+  if (r.native && hasVoice(v)) c.push({ text: r.native, lang: v === "ur" ? "ur-PK" : "sd-IN" });
+  if (r.deva && hasVoice("hi")) c.push({ text: r.deva, lang: "hi-IN", pitch: 1.05 });
+  if (r.spelling) c.push({ text: r.spelling, lang: "en-IN", strict: true });
+  if (c.length) speakChain(c, rateFor(0.8)); else toast(`This device has no ${LANGS[r.lang].name} voice yet.`);
+}
 function showTr(r) {
   const out = $("#trOut");
   const pic = r.color ? `<span class="swatch" style="background:${r.color};width:56px;height:56px"></span>` : esc(r.pic || "🔤");
@@ -2301,7 +2403,11 @@ $("#trForm").addEventListener("submit", async e => {
       clearTimeout(tm);
       const j = await res.json(), t = String((j && j.responseData && j.responseData.translatedText) || "").trim();
       if (!t || /MYMEMORY WARNING|INVALID|QUERY LENGTH/i.test(t)) throw new Error("no result");
-      showTr({ lang: trLang, native: fromNative ? q : t, spelling: "", english: fromNative ? t : q, pic: "", src: "Translated by MyMemory. Check new words with her teacher." });
+      let deva = "";
+      if (trLang === "ur") {
+        try { const hr = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent((fromNative ? t : q).slice(0, 80))}&langpair=en%7Chi`); const hj = await hr.json(); deva = String((hj && hj.responseData && hj.responseData.translatedText) || ""); if (/MYMEMORY|INVALID/i.test(deva)) deva = ""; } catch (e) {}
+      }
+      showTr({ lang: trLang, native: fromNative ? q : t, deva, spelling: "", english: fromNative ? t : q, pic: "", src: "Translated by MyMemory. Check new words with her teacher." });
     } catch (err) { out.innerHTML = `<div class="empty">New words need the internet. Try cat, mango or hello!</div>`; }
     return;
   }
@@ -2311,11 +2417,11 @@ $("#trForm").addEventListener("submit", async e => {
   try {
     const r = await sampleFn.json(`You help a 6-year-old girl in Sindh, Pakistan learn ${L.name} (written in ${L.script}). Translate the word or short phrase below. If it is English, give the ${L.name}. If it is ${L.name}, give the English. Keep everything simple and child-friendly. If the input is not suitable for a young child, reply {"ok": false}.
 Reply with only JSON like: ${L.ex}
-"native" is the ${L.name} word in its own script. "spelling" is an easy English-letter spelling of the ${L.name} word. "emoji" is one emoji or "". "example" is a very short, simple English sentence.
+"native" is the ${L.name} word in its own script. "deva" is the same ${L.name} word written in Devanagari letters so a Hindi voice can read it aloud. "spelling" is an easy English-letter spelling of the ${L.name} word. "emoji" is one emoji or "". "example" is a very short, simple English sentence.
 
 Word: ${q.slice(0, 80)}`, { modelTier: "quick", signal: trCtl.signal });
     if (!r || r.ok === false || !r.native) { out.innerHTML = `<div class="empty">Let's try a different word!</div>`; return; }
-    showTr({ lang: trLang, native: String(r.native), spelling: String(r.spelling || ""), english: String(r.english || ""), pic: [...String(r.emoji || "")].slice(0, 2).join(""), example: String(r.example || ""), src: "Translated by Claude. Check new words with your teacher." });
+    showTr({ lang: trLang, native: String(r.native), deva: String(r.deva || ""), spelling: String(r.spelling || ""), english: String(r.english || ""), pic: [...String(r.emoji || "")].slice(0, 2).join(""), example: String(r.example || ""), src: "Translated by Claude. Check new words with your teacher." });
   } catch (err) {
     const code = err && err.code;
     if (code === "cancelled") return;
