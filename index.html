@@ -618,6 +618,45 @@ textarea.g-input { resize: vertical; }
   .settings-row { grid-template-columns: 1fr; }
 }
 
+/* puzzles */
+.shadow-e { filter: brightness(0); transition: filter .4s; display: inline-block; }
+.opt.right .shadow-e { filter: none; }
+.jg-wrap { position: relative; width: min(100%, 460px); margin: 0 auto; }
+.jg-board { display: grid; gap: 3px; background: var(--ink); border: 3px solid var(--ink); border-radius: 16px; overflow: hidden; aspect-ratio: 1; }
+.jg-board.solved { gap: 0; box-shadow: 0 0 0 6px var(--mango); }
+.jg-piece { background-image: var(--jimg); border: 0; padding: 0; aspect-ratio: 1; cursor: pointer; transition: transform .15s, filter .15s; }
+.jg-piece.sel { transform: scale(.9); filter: drop-shadow(0 0 6px #ffae1a) brightness(1.1); outline: 4px solid var(--mango); outline-offset: -4px; }
+.jg-piece.ok { animation: popin .25s; }
+.jg-peek { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 16px; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.jg-peek.show { opacity: 1; }
+.sl-board { display: grid; gap: 6px; width: min(100%, 400px); margin: 0 auto; aspect-ratio: 1; background: var(--soft); border: 3px solid var(--ink); border-radius: 18px; padding: 6px; }
+.sl-tile { border: 3px solid var(--ink); border-radius: 12px; background: var(--tc, #ffae1a); color: #fff; font: 800 clamp(1.4rem, 7vw, 2.4rem) var(--display); padding: 0; box-shadow: 2px 3px 0 var(--ink); }
+.sl-tile.pic { background-image: var(--simg); position: relative; }
+.sl-tile.pic small { position: absolute; top: 3px; left: 5px; font-size: .85rem; background: rgba(255, 255, 255, .85); color: var(--ink); border-radius: 6px; padding: 0 5px; }
+.sl-tile.blank { border: 0; background: transparent; box-shadow: none; }
+.mz-pad { display: grid; grid-template-columns: repeat(3, 64px); grid-template-rows: repeat(2, 56px); gap: 8px; justify-content: center; }
+.mz-pad .btn { padding: 0; font-size: 1.6rem; }
+.mz-pad [data-d="0,-1"] { grid-column: 2; grid-row: 1; }
+.mz-pad [data-d="-1,0"] { grid-column: 1; grid-row: 2; }
+.mz-pad [data-d="1,0"] { grid-column: 3; grid-row: 2; }
+.mz-pad [data-d="0,1"] { grid-column: 2; grid-row: 2; }
+.sdk { display: grid; grid-template-columns: repeat(4, 1fr); width: min(100%, 360px); margin: 0 auto; border: 4px solid var(--ink); border-radius: 14px; overflow: hidden; background: var(--ink); gap: 2px; }
+.sdk-cell { aspect-ratio: 1; border: 0; background: var(--card); font-size: clamp(1.8rem, 9vw, 2.8rem); padding: 0; }
+.sdk-cell.rb { margin-right: 3px; }
+.sdk-cell.bb { margin-bottom: 3px; }
+.sdk-cell.given { background: #eef2fb; color: inherit; opacity: 1; }
+.sdk-cell.sel { background: #fff4d6; outline: 4px solid var(--mango); outline-offset: -4px; }
+.sdk-cell.bad { background: #ffe3ea; }
+.sdk-pal { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.sdk-pal .stamp-btn { width: 60px; height: 60px; font-size: 2rem; }
+.sp-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; background: #fff8e1; border: 3px solid var(--ink); border-radius: 16px; padding: 6px; }
+.sp-cell { aspect-ratio: 1; border: 0; background: transparent; font-size: clamp(1rem, 4.6vw, 2rem); padding: 0; border-radius: 50%; }
+.sp-cell.found { box-shadow: 0 0 0 3px var(--rose) inset; background: #ffe3ea; }
+.sp-cell.nope { animation: shake .3s; }
+.sp-cell.hint { animation: bump .4s 3; background: #fff4d6; }
+@media (max-width: 520px) { .sp-wrap { grid-template-columns: 1fr; } }
+
 /* quiz */
 .quiz { display: grid; gap: 16px; justify-items: center; text-align: center; }
 .q-dots { display: flex; gap: 6px; }
@@ -766,6 +805,7 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
       <button class="tile" style="--c: var(--ajrak-red)" data-go="sindhi"><span class="ico">🪷</span><b>Sindhi</b><span class="sub">Words, numbers, colours</span></button>
       <button class="tile" style="--c: #2e7d5b" data-go="urdu"><span class="ico">✍️</span><b>Urdu</b><span class="sub">Letters &amp; words</span></button>
       <button class="tile" style="--c: var(--parrot)" data-go="games"><span class="ico">🎮</span><b>Games</b><span class="sub">Match, pop, trace</span></button>
+      <button class="tile" style="--c: #6a4cc9" data-go="puzzles"><span class="ico">🧩</span><b>Puzzles</b><span class="sub">Jigsaw, maze, sudoku…</span></button>
       <button class="tile" style="--c: #e84a8a" data-go="art"><span class="ico">🎨</span><b>Art Studio</b><span class="sub">Draw, colour, design</span></button>
       <button class="tile" style="--c: var(--lilac)" data-go="songs"><span class="ico">🎵</span><b>Songs &amp; Dance</b><span class="sub">Sing along, freeze dance</span></button>
       <button class="tile" style="--c: var(--ajrak-indigo)" data-go="studio"><span class="ico">🎬</span><b>Video Studio</b><span class="sub">Be a star on camera</span></button>
@@ -910,6 +950,7 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
     <div class="screen-title"><h2>Games</h2></div>
     <h3 class="sec">🧠 Brain games</h3>
     <div class="tiles">
+      <button class="tile" style="--c: #6a4cc9" data-go="puzzles"><span class="ico">🧩</span><b>Puzzles</b><span class="sub">7 puzzles to solve</span></button>
       <button class="tile" style="--c: var(--teal)" data-game="simon"><span class="ico">🚦</span><b>Copy Me!</b><span class="sub">Remember the colours</span></button>
       <button class="tile dark-text" style="--c: #c9b8ff" data-quiz="pattern"><span class="ico">🔁</span><b>What Comes Next?</b><span class="sub">Find the pattern</span></button>
       <button class="tile" style="--c: var(--ajrak-red)" data-quiz="oddone"><span class="ico">🤔</span><b>Odd One Out</b><span class="sub">Which one is different?</span></button>
@@ -1014,6 +1055,22 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
     </div>
     <div class="panel"><h3>My sticker book</h3><div class="sticker-grid" id="stickerGrid"></div></div>
     <div class="panel"><h3>My surprises</h3><div class="surprise-list" id="surpriseList"></div></div>
+  </section>
+
+  <!-- PUZZLES -->
+  <section class="screen" id="s-puzzles" hidden>
+    <button class="back" data-go="home">← Home</button>
+    <div class="screen-title"><h2>Puzzles</h2><span class="clap">Think hard! 🧠</span></div>
+    <div class="tiles">
+      <button class="tile" style="--c: #6a4cc9" data-game="jigsaw"><span class="ico">🧩</span><b>Jigsaw</b><span class="sub">Put the picture together</span></button>
+      <button class="tile dark-text" style="--c: var(--mango)" data-game="slider"><span class="ico">🔢</span><b>Sliding Puzzle</b><span class="sub">Slide the tiles in order</span></button>
+      <button class="tile" style="--c: var(--parrot)" data-game="maze"><span class="ico">🌀</span><b>Maze</b><span class="sub">Find the way out</span></button>
+      <button class="tile" style="--c: var(--ink)" data-quiz="shadow"><span class="ico">👤</span><b>Shadow Match</b><span class="sub">Whose shadow is it?</span></button>
+      <button class="tile" style="--c: var(--ajrak-red)" data-game="sudoku"><span class="ico">🍎</span><b>Fruit Sudoku</b><span class="sub">One of each in every line</span></button>
+      <button class="tile" style="--c: var(--teal)" data-game="spotdiff"><span class="ico">🔍</span><b>Spot the Difference</b><span class="sub">Find 3 changes</span></button>
+      <button class="tile" style="--c: var(--rose)" data-game="dotdot"><span class="ico">✏️</span><b>Dot to Dot</b><span class="sub">Join the numbers</span></button>
+      <button class="tile" style="--c: var(--teal)" data-game="simon"><span class="ico">🚦</span><b>Copy Me!</b><span class="sub">Remember the colours</span></button>
+    </div>
   </section>
 
   <!-- URDU -->
@@ -1391,7 +1448,7 @@ function showPrize(sticker, sur) {
   $("#prizeOk", o).onclick = () => { o.remove(); renderPrizes(); };
 }
 
-const TOPIC = { phonics: "Letter sounds", sight: "Sight words", days: "Days of the week", gender: "He & She words", opposites: "Opposites", count: "Counting", add: "Adding", sub: "Taking away", order: "Before & after", bigger: "Bigger number", shapes: "Shapes", time: "Telling time", money: "Rupees", pattern: "Patterns", oddone: "Odd one out", spell: "Spelling", sdwords: "Sindhi words", sdnums: "Sindhi numbers", sdcolors: "Sindhi colours", animalsounds: "Animal sounds", colors: "Colours", urdu: "Urdu letters", school: "School words", story: "Story questions", babies: "Baby animals", animalfood: "Animal food" };
+const TOPIC = { phonics: "Letter sounds", sight: "Sight words", days: "Days of the week", gender: "He & She words", opposites: "Opposites", count: "Counting", add: "Adding", sub: "Taking away", order: "Before & after", bigger: "Bigger number", shapes: "Shapes", time: "Telling time", money: "Rupees", pattern: "Patterns", oddone: "Odd one out", spell: "Spelling", sdwords: "Sindhi words", sdnums: "Sindhi numbers", sdcolors: "Sindhi colours", animalsounds: "Animal sounds", colors: "Colours", urdu: "Urdu letters", school: "School words", story: "Story questions", shadow: "Shadow match", babies: "Baby animals", animalfood: "Animal food" };
 let progress = store.get("progress", {});
 let days = store.get("days", []);
 const localDay = d => d.toLocaleDateString("en-CA");
@@ -1562,7 +1619,7 @@ function playSong(song = currentSong, box = $("#lyrics"), reward = true, onEnd) 
 }
 
 /* ---------- router ---------- */
-const SCREENS = ["home","english","maths","sindhi","urdu","games","songs","studio","stickers","science","art","pet","progress","activity"];
+const SCREENS = ["home","english","maths","sindhi","urdu","games","puzzles","songs","studio","stickers","science","art","pet","progress","activity"];
 let lastScreen = "home";
 let cleanup = null;
 /* Delayed actions only run if the child is still on the same screen. */
@@ -1614,6 +1671,7 @@ const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => String(a + i
 const GROUPS = { fruits: ["🍎", "🍌", "🍇", "🥭", "🍉", "🍊"], animals: ["🐶", "🐱", "🐄", "🐐", "🐴", "🐔"], vehicles: ["🚗", "🚌", "🚲", "🚂", "✈️", "🚤"], clothes: ["👕", "👗", "🧢", "👟", "🧦", "🧣"], weather: ["☀️", "🌧️", "⛄", "🌈", "⚡", "☁️"] };
 const GROUP_ONE = { fruits: "a fruit", animals: "an animal", vehicles: "something we ride in", clothes: "something we wear", weather: "weather" };
 const ML = {
+  shadow: q => ({ ur: `${q.d.a[1]} کا سایہ کون سا ہے؟`, hi: `${q.d.a[1]} का साया कौन सा है?`, sd: `${q.d.a[1]} जो परछांवो कहिड़ो आहे?` }),
   urdu: q => ({ ur: `${q.d.L[3]} کس حرف سے شروع ہوتا ہے؟`, hi: `${q.d.L[5]} किस हर्फ़ से शुरू होता है?`, sd: `${q.d.L[5]} कहिड़े अखर सां शुरू थिए थो?` }),
   school: q => ML.sight(q),
   colors: q => { const C = { red: ["لال", "लाल", "गाढ़ी"], yellow: ["پیلی", "पीली", "पीली"], green: ["ہری", "हरी", "साई"], blue: ["نیلی", "नीली", "नीरी"], orange: ["نارنجی", "नारंगी", "नारंगी"], purple: ["جامنی", "जामनी", "जामनी"], pink: ["گلابی", "गुलाबी", "गुलाबी"], brown: ["بھوری", "भूरी", "नासी"], white: ["سفید", "सफ़ेद", "अछी"] }[q.d.c]; return { ur: `کوئی ${C[0]} چیز ڈھونڈو!`, hi: `कोई ${C[1]} चीज़ ढूंढो!`, sd: `का ${C[2]} शइ गोल्हियो!` }; },
@@ -1667,6 +1725,7 @@ const URDU_AB = [
 const urduML = L => (L[8] ? { ur: `${L[3]} میں ${L[0]}`, hi: `${L[5]} में ${L[2]}`, sd: `${L[5]} में ${L[2]}` } : { ur: `${L[0]}، ${L[0]} سے ${L[3]}`, hi: `${L[2]}, ${L[2]} से ${L[5]}`, sd: `${L[2]}, ${L[2]} सां ${L[5]}` });
 let schoolWords = store.get("schoolWords", { title: "", words: [] });
 const schoolList = () => schoolWords.words || [];
+const SHADOW_POOL = [["🐘", "elephant"], ["🦒", "giraffe"], ["🐇", "rabbit"], ["🦋", "butterfly"], ["🐢", "turtle"], ["🦀", "crab"], ["🐬", "dolphin"], ["🦚", "peacock"], ["✈️", "aeroplane"], ["🚲", "bicycle"], ["🎸", "guitar"], ["☂️", "umbrella"], ["🍌", "banana"], ["🍐", "pear"], ["🐪", "camel"], ["🦕", "dinosaur"], ["🐌", "snail"], ["🦉", "owl"], ["🌵", "cactus"], ["🏠", "house"], ["🐈", "cat"], ["🦜", "parrot"]];
 const GEN = {
   phonics() { const [l, w, e] = pick(PHONICS); const x = l === "X"; return { title: "Letter sounds", prompt: x ? `Which letter is at the END of ${w}?` : `${w} starts with which letter?`, visual: e, speak: x ? `Which letter is at the end of ${w}?` : `${w}. ${w} starts with which letter?`, answer: l, options: opts(l, PHONICS.map(p => p[0])), d: { l, w, e, x } }; },
   sight() { const w = pick(SIGHT); return { title: "Sight words", prompt: "Listen, then tap the word you hear.", visual: "👂", speak: w, answer: w, options: opts(w, SIGHT), d: { w } }; },
@@ -1713,6 +1772,7 @@ const GEN = {
   colors() { const names = Object.keys(COLOR_ITEMS), c = pick(names), ans = pick(COLOR_ITEMS[c]), o = shuffle([ans, ...shuffle(names.filter(n => n !== c)).slice(0, 3).map(n => pick(COLOR_ITEMS[n]))]); return { title: "Colour Hunt", prompt: `Find something ${c.toUpperCase()}!`, visual: `<span class="big-swatch" style="background:${COLOR_HEX[c]}"></span>`, speak: `Find something ${c}!`, answer: ans, options: o, emoji: true, d: { c, o } }; },
   urdu() { const pool = URDU_AB.filter(x => !x[8]), L = pick(pool); return { title: "Urdu letters", prompt: `Which letter does “${L[4]}” start with?`, visual: `${L[7]}<span class="sd" style="font-size:2.4rem">${L[3]}</span>`, speak: `${L[4]}. Which Urdu letter does ${L[4]} start with?`, answer: L[0], options: opts(L[0], pool.map(x => x[0])), sindhiOpts: true, reveal: `${L[1]} for ${L[4]}`, d: { L } }; },
   school() { const ws = schoolList().length ? schoolList() : SIGHT, w = pick(ws); return { title: "School words", prompt: "Listen, then tap the word you hear.", visual: "📝", speak: w, answer: w, options: opts(w, ws.length >= 4 ? ws : [...ws, ...SIGHT]), d: { w } }; },
+  shadow() { const a = pick(SHADOW_POOL), o = shuffle([a, ...shuffle(SHADOW_POOL.filter(x => x !== a)).slice(0, 3)]); return { title: "Shadow Match", prompt: `Which shadow belongs to the ${a[1]}?`, visual: a[0], speak: `Which shadow belongs to the ${a[1]}?`, answer: a[0], options: o.map(x => x[0]), emoji: true, shadowOpts: true, reveal: `That's the ${a[1]}'s shadow!`, d: { a, o } }; },
   sdcolors() { const w = pick(SINDHI.Colours); return { title: "Sindhi colours", prompt: "Which colour is this word?", visual: `<span class="sd">${w[0]}</span><span class="tr">${w[1]}</span>`, speakLocal: w[1], answer: w[3], options: opts(w[3], SINDHI.Colours.map(c => c[3])), swatch: true, reveal: `${w[1]} means ${w[2]}`, d: { w } }; }
 };
 
@@ -1731,6 +1791,7 @@ function countAlong(box, finalText, vals) {
   step();
 }
 const HELP = {
+  shadow: q => ({ steps: ["Look at the shape of the picture.", "Find the shadow with the same outline.", "Look for big ears, a long neck or wings!"], demo: `<div class="demo-odd">${q.d.o.map(x => `<span class="${x === q.d.a ? "me" : ""}"><span class="${x === q.d.a ? "" : "shadow-e"}">${x[0]}</span><small>${x[1]}</small></span>`).join("")}</div>`, say: `Look at the ${q.d.a[1]}'s shape. Find the shadow that looks just the same.` }),
   urdu: q => { const L = q.d.L; return { steps: ["Say the word slowly.", "Listen to the very first sound.", `${L[4]} starts with ${L[1]}!`], demo: `<div class="demo-word"><span class="pic">${L[7]}</span><span><span class="sd" style="font-size:4rem;display:block">${L[0]}</span><small class="tr">${L[1]} for ${L[4]}</small></span></div>`, run: () => sayIn("ur", urduML(L)) }; },
   school: q => HELP.sight(q),
   colors: q => ({ steps: [`Look at the colour circle. It is ${q.d.c}.`, "Now look at the colour of each picture.", `Which one is ${q.d.c} too?`], demo: `<div class="demo-odd">${q.d.o.map(e => `<span class="${colorOf(e) === q.d.c ? "me" : ""}">${e}<small>${colorOf(e)}</small></span>`).join("")}</div>`, say: `We want ${q.d.c}. ` + q.d.o.map(e => colorOf(e)).join(", ") }),
@@ -1790,7 +1851,7 @@ function startQuiz(kind, rounds = 6) {
       if (i >= rounds) return finish();
       const q = gen(); i++;
       let tries = 0;
-      const optHtml = o => q.swatch ? `<span class="swatch" style="background:${o};display:inline-block"></span>` : q.sindhiOpts ? `<span class="sd">${o}</span>` : esc(o);
+      const optHtml = o => q.shadowOpts ? `<span class="shadow-e">${o}</span>` : q.swatch ? `<span class="swatch" style="background:${o};display:inline-block"></span>` : q.sindhiOpts ? `<span class="sd">${o}</span>` : esc(o);
       host.innerHTML = `<div class="quiz">
         <h3>${esc(q.title)}</h3>
         <div class="q-dots">${Array.from({ length: rounds }, (_, k) => `<i class="${k < i - 1 ? "done" : ""}"></i>`).join("")}</div>
@@ -1844,7 +1905,7 @@ function startQuiz(kind, rounds = 6) {
 }
 
 /* ---------- games ---------- */
-function startGame(kind) { ({ memory, balloons, trace, freeze, simon, ttt, race, snakes, shapes3d, kite, sayit, sounds, spell, colourlab, volcano, sinkfloat, magnet, plant, matter, homes, moles, freedraw, colouring, pixels, build, shapeplay, fashion, cake, stories, music, storybook })[kind]?.(); }
+function startGame(kind) { ({ memory, balloons, trace, freeze, simon, ttt, race, snakes, shapes3d, kite, sayit, sounds, spell, colourlab, volcano, sinkfloat, magnet, plant, matter, homes, moles, freedraw, colouring, pixels, build, shapeplay, fashion, cake, stories, music, storybook, jigsaw, slider, maze, sudoku, spotdiff, dotdot })[kind]?.(); }
 
 function memory() {
   openActivity(host => {
@@ -2368,7 +2429,7 @@ function music() {
       <div class="pads">${ROWS.map(([n, c, l], r) => `<button class="mpad" data-r="${r}" style="--pc:${c}" aria-label="${n}">${l}</button>`).join("")}</div>
       <div class="seq" id="seq">${ROWS.map(([n, c, l], r) => `<div class="seq-row"><span class="seq-lab" style="--pc:${c}">${l}</span>${Array.from({ length: 8 }, (_, st) => `<button class="cellb ${grid[r][st] ? "on" : ""}" data-r="${r}" data-s="${st}" style="--pc:${c}" aria-label="${n} beat ${st + 1}"></button>`).join("")}</div>`).join("")}</div>
       <div class="btn-row" style="justify-content:center;align-items:center"><button class="btn go" id="mPlay">▶ Play</button><label class="voice-speed" for="mBpm" style="min-width:240px"><span>Speed</span><input type="range" id="mBpm" min="70" max="150" step="5" value="${bpm}"><span id="mBpmL">${bpm}</span></label></div>
-      <div class="btn-row" style="justify-content:center">${Object.keys(PRESETS).map(k => `<button class="btn white" data-pre="${k}">${k}</button>`).join("")}<button class="btn white" id="mClear">🧹 Clear</button><button class="btn pink" id="mDance">🎥 Dance to my beat</button></div>`;
+      <div class="btn-row" id="mPre" style="justify-content:center">${Object.keys(PRESETS).map(k => `<button class="btn white" data-pre="${k}">${k}</button>`).join("")}<button class="btn white" id="mClear">🧹 Clear</button><button class="btn pink" id="mDance">🎥 Dance to my beat</button></div>`;
     const cells = () => $$(".cellb", host);
     const tick = () => { const a = actx(); if (!a) return; cells().forEach(x => x.classList.toggle("now", +x.dataset.s === step)); grid.forEach((row, r) => { if (row[step]) hit(r, a.currentTime + 0.01); }); step = (step + 1) % 8; };
     const stop = () => { clearInterval(timer); playing = false; cells().forEach(x => x.classList.remove("now")); const b = $("#mPlay", host); if (b) b.textContent = "▶ Play"; };
@@ -2378,7 +2439,7 @@ function music() {
     $("#seq", host).addEventListener("click", e => { const b = e.target.closest(".cellb"); if (!b) return; const r = +b.dataset.r, st = +b.dataset.s; grid[r][st] = grid[r][st] ? 0 : 1; b.classList.toggle("on", !!grid[r][st]); if (grid[r][st]) hit(r); store.set("beat", grid); });
     $("#mPlay", host).onclick = () => (playing ? stop() : start());
     $("#mBpm", host).oninput = e => { bpm = +e.target.value; $("#mBpmL", host).textContent = bpm; store.set("bpm", bpm); if (playing) { clearInterval(timer); timer = setInterval(tick, 60000 / bpm / 2); } };
-    host.addEventListener("click", e => { const b = e.target.closest("[data-pre]"); if (!b) return; grid = PRESETS[b.dataset.pre].map(r => r.slice()); store.set("beat", grid); cells().forEach(x => x.classList.toggle("on", !!grid[+x.dataset.r][+x.dataset.s])); if (!playing) start(); });
+    $("#mPre", host).addEventListener("click", e => { const b = e.target.closest("[data-pre]"); if (!b) return; grid = PRESETS[b.dataset.pre].map(r => r.slice()); store.set("beat", grid); cells().forEach(x => x.classList.toggle("on", !!grid[+x.dataset.r][+x.dataset.s])); if (!playing) start(); });
     $("#mClear", host).onclick = () => { grid = grid.map(r => r.map(() => 0)); store.set("beat", grid); cells().forEach(x => x.classList.remove("on")); };
     $("#mDance", host).onclick = () => { if (!playing) start(); openRecorder("dance"); };
   });
@@ -2427,6 +2488,292 @@ $("#petBox").addEventListener("click", e => {
   const h = e.target.closest("[data-hat]"); if (h && pet && !h.disabled) { pet.hat = h.dataset.hat; store.set("pet", pet); renderPet(); plip(); }
 });
 $("#petBox").addEventListener("change", e => { if (e.target.id === "petName" && pet) { pet.name = e.target.value.trim() || PETS[pet.type].name; store.set("pet", pet); renderPet(); } });
+
+/* ======================= PUZZLES ======================= */
+const PZML = {
+  jigsaw: { ur: "دو ٹکڑوں پر ٹیپ کر کے ان کی جگہ بدلو اور تصویر پوری کرو!", hi: "दो टुकड़ों पर टैप करके उनकी जगह बदलो और तस्वीर पूरी करो!", sd: "ब टुकरनि ते टैप करे उन्हनि जी जगह मटायो ऐं तस्वीर पूरी करियो!" },
+  slider: { ur: "خالی جگہ کے ساتھ والے خانے پر ٹیپ کرو، وہ کھسک جائے گا۔ سب کو ترتیب سے لگاؤ!", hi: "ख़ाली जगह के साथ वाले ख़ाने पर टैप करो, वो खिसक जाएगा। सबको तरतीब से लगाओ!", sd: "ख़ाली जगह जे भरिसां वारे ख़ाने ते टैप करियो, उहो खिसकंदो। सभिनि खे तरतीब सां लगायो!" },
+  maze: { ur: "راستہ ڈھونڈو! تیر والے بٹن دباؤ یا انگلی سے چلاؤ۔", hi: "रास्ता ढूंढो! तीर वाले बटन दबाओ या उंगली से चलाओ।", sd: "रस्तो गोल्हियो! तीर वारा बटण दबायो या आङुर सां हलायो।" },
+  sudoku: { ur: "ہر لائن، ہر کالم اور ہر ڈبے میں ہر تصویر صرف ایک بار آئے!", hi: "हर लाइन, हर कॉलम और हर डिब्बे में हर तस्वीर सिर्फ़ एक बार आए!", sd: "हर लाइन, हर कालम ऐं हर डबे में हर तस्वीर रुगो हिक दफ़ो अचे!" },
+  spotdiff: { ur: "دونوں تصویروں میں تین فرق ڈھونڈو!", hi: "दोनों तस्वीरों में तीन फ़र्क़ ढूंढो!", sd: "बिन्हीं तस्वीरुनि में टे फ़र्क़ गोल्हियो!" },
+  dots: { ur: "نمبر ترتیب سے ملاؤ: ایک، دو، تین…", hi: "नंबर तरतीब से मिलाओ: एक, दो, तीन…", sd: "नंबर तरतीब सां मिलायो: हिक, ब, टे…" }
+};
+const SCENES = [["🦚", "#9fd8ff", "#c7efd5", ["🌸", "🌳", "☀️"]], ["🐘", "#ffe2a8", "#ffd166", ["🌴", "☀️", "🦜"]], ["🚀", "#141a3d", "#3a4a8a", ["⭐", "🌙", "🪐"]], ["🐠", "#8fd3ff", "#2f8fc6", ["🫧", "🐚", "🌿"]], ["🦄", "#ffc2d4", "#c9b8ff", ["🌈", "⭐", "☁️"]], ["🥭", "#fff4d6", "#ffd21f", ["🍃", "🌞", "🐝"]]];
+function sceneCanvas(k, S = 480) {
+  const [big, c1, c2, small] = SCENES[k], c = document.createElement("canvas"); c.width = c.height = S; const x = c.getContext("2d");
+  const g = x.createLinearGradient(0, 0, 0, S); g.addColorStop(0, c1); g.addColorStop(1, c2); x.fillStyle = g; x.fillRect(0, 0, S, S);
+  x.globalAlpha = 0.22; x.fillStyle = "#ffffff"; [[0.2, 0.55, 0.12], [0.75, 0.7, 0.16], [0.55, 0.12, 0.09], [0.9, 0.42, 0.07], [0.35, 0.92, 0.1]].forEach(([a, b, r]) => { x.beginPath(); x.arc(a * S, b * S, r * S, 0, Math.PI * 2); x.fill(); });
+  x.globalAlpha = 1; x.textAlign = "center"; x.textBaseline = "middle";
+  x.font = `${S * 0.5}px sans-serif`; x.fillText(big, S / 2, S * 0.56);
+  x.font = `${S * 0.15}px sans-serif`; x.fillText(small[0], S * 0.16, S * 0.16); x.fillText(small[1], S * 0.84, S * 0.17); x.fillText(small[2], S * 0.17, S * 0.86);
+  x.lineWidth = S * 0.035; x.strokeStyle = "#1d2340"; x.strokeRect(0, 0, S, S);
+  return c;
+}
+function squareFrom(src, cb) { const im = new Image(); im.onload = () => { const S = 480, c = document.createElement("canvas"); c.width = c.height = S; const x = c.getContext("2d"), m = Math.min(im.naturalWidth, im.naturalHeight); x.fillStyle = "#fff"; x.fillRect(0, 0, S, S); x.drawImage(im, (im.naturalWidth - m) / 2, (im.naturalHeight - m) / 2, m, m, 0, 0, S, S); cb(c.toDataURL("image/png")); }; im.src = src; }
+
+/* ---------- Jigsaw (tap two pieces to swap) ---------- */
+function jigsaw() {
+  openActivity(host => {
+    let n = 3, img = sceneCanvas(0).toDataURL(), sel = -1, pos = [], moves = 0, done = false;
+    host.innerHTML = `<h3>Jigsaw Puzzle 🧩</h3><p class="hint">Tap a piece, then tap another piece to swap them. Put the picture back together!</p>${langRow()}
+      <div class="tabs" id="jgSize">${[[2, "Easy (4)"], [3, "Medium (9)"], [4, "Hard (16)"]].map(([v, l]) => `<button class="tab" data-n="${v}" aria-selected="${v === n}">${l}</button>`).join("")}</div>
+      <div class="tabs" id="jgPic">${SCENES.map((sc, k) => `<button class="tab" data-k="${k}" aria-selected="${k === 0}">${sc[0]}</button>`).join("")}<button class="tab" id="jgMine">🖼️ My art</button></div>
+      <div id="jgMineList"></div>
+      <div class="jg-wrap"><div class="jg-board" id="jgBoard"></div><img class="jg-peek" id="jgPeek" alt="The finished picture"></div>
+      <div class="big-q" id="jgMsg"></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn white" id="jgPeekBtn">👀 Peek</button><button class="btn" id="jgShuffle">🔀 Shuffle again</button></div>`;
+    bindLang(host, () => PZML.jigsaw);
+    const board = $("#jgBoard", host), msg = t => ($("#jgMsg", host).textContent = t);
+    const draw = () => {
+      board.style.setProperty("--jimg", `url(${img})`); board.style.gridTemplateColumns = `repeat(${n}, 1fr)`; $("#jgPeek", host).src = img;
+      board.innerHTML = pos.map((piece, slot) => { const r = Math.floor(piece / n), c = piece % n; return `<button class="jg-piece ${piece === slot ? "ok" : ""} ${slot === sel ? "sel" : ""}" data-slot="${slot}" style="background-size:${n * 100}% ${n * 100}%;background-position:${(c / (n - 1)) * 100}% ${(r / (n - 1)) * 100}%" aria-label="puzzle piece"></button>`; }).join("");
+    };
+    const setup = () => { pos = shuffle([...Array(n * n).keys()]); if (pos.every((v, i) => v === i)) [pos[0], pos[1]] = [pos[1], pos[0]]; sel = -1; moves = 0; done = false; board.classList.remove("solved"); draw(); msg(`${pos.filter((v, i) => v === i).length} of ${n * n} pieces in the right place`); };
+    board.addEventListener("click", e => {
+      const b = e.target.closest("[data-slot]"); if (!b || done) return; const slot = +b.dataset.slot;
+      if (sel < 0) { sel = slot; plip(); draw(); return; }
+      if (sel === slot) { sel = -1; draw(); return; }
+      [pos[sel], pos[slot]] = [pos[slot], pos[sel]]; const good = pos[slot] === slot || pos[sel] === slot || pos[sel] === sel; sel = -1; moves++;
+      good ? ding() : plip(); draw();
+      const ok = pos.filter((v, i) => v === i).length;
+      if (ok === n * n) { done = true; board.classList.add("solved"); msg(`🎉 You did it in ${moves} moves!`); addStar(n === 2 ? 1 : n === 3 ? 2 : 3); celebrate("Puzzle solved!"); }
+      else msg(`${ok} of ${n * n} pieces in the right place`);
+    });
+    $("#jgSize", host).addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (!b) return; n = +b.dataset.n; $$("#jgSize .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); setup(); });
+    $("#jgPic", host).addEventListener("click", async e => {
+      const b = e.target.closest("[data-k]");
+      if (b) { $$("#jgPic .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); img = sceneCanvas(+b.dataset.k).toDataURL(); $("#jgMineList", host).innerHTML = ""; setup(); return; }
+      if (e.target.closest("#jgMine")) {
+        const list = await artAll(), box = $("#jgMineList", host);
+        if (!list.length) { box.innerHTML = `<div class="empty">Save a drawing in the Art Studio first, then you can make it into a puzzle!</div>`; return; }
+        box.innerHTML = `<div class="gallery">${list.slice(0, 12).map(a => `<button class="art-thumb" data-art="${a.id}"><img src="${URL.createObjectURL(a.blob)}" alt="My artwork"></button>`).join("")}</div>`;
+        box.onclick = ev => { const t = ev.target.closest("[data-art]"); if (!t) return; squareFrom(t.querySelector("img").src, url => { img = url; $$("#jgPic .tab", host).forEach(x => x.setAttribute("aria-selected", x.id === "jgMine")); box.innerHTML = ""; setup(); say("Your own picture is now a puzzle!"); }); };
+      }
+    });
+    $("#jgPeekBtn", host).onclick = () => { const pk = $("#jgPeek", host); pk.classList.add("show"); later(() => pk.classList.remove("show"), 1500); };
+    $("#jgShuffle", host).onclick = setup;
+    setup();
+  });
+}
+
+/* ---------- Sliding puzzle ---------- */
+function slider() {
+  openActivity(host => {
+    let n = 3, mode = "numbers", tiles = [], moves = 0, done = false, img = sceneCanvas(1).toDataURL();
+    const COLS = ["#ee4d7d", "#ffae1a", "#22a86a", "#0f9db3", "#7b5cd6", "#a3192f", "#1f6fe0", "#8b5a2b", "#e84a8a", "#2e7d5b", "#f07b3f", "#6a4cc9", "#12a37f", "#e0262f", "#3a8ee6"];
+    host.innerHTML = `<h3>Sliding Puzzle 🔢</h3><p class="hint">Tap a tile next to the empty space to slide it. Put them back in order!</p>${langRow()}
+      <div class="tabs" id="slSize">${[[3, "3 × 3"], [4, "4 × 4"]].map(([v, l]) => `<button class="tab" data-n="${v}" aria-selected="${v === n}">${l}</button>`).join("")}</div>
+      <div class="tabs" id="slMode"><button class="tab" data-m="numbers" aria-selected="true">🔢 Numbers</button><button class="tab" data-m="picture" aria-selected="false">🖼️ Picture</button></div>
+      <div class="sl-board" id="slBoard"></div>
+      <div class="big-q" id="slMsg"></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn" id="slShuffle">🔀 New puzzle</button></div>`;
+    bindLang(host, () => PZML.slider);
+    const board = $("#slBoard", host), blank = () => tiles.indexOf(n * n - 1);
+    const adj = (a, b) => (Math.abs(a - b) === 1 && Math.floor(a / n) === Math.floor(b / n)) || Math.abs(a - b) === n;
+    const draw = () => {
+      board.style.gridTemplateColumns = `repeat(${n}, 1fr)`; board.style.setProperty("--simg", `url(${img})`);
+      board.innerHTML = tiles.map((t, i) => { if (t === n * n - 1) return `<span class="sl-tile blank"></span>`; const r = Math.floor(t / n), c = t % n, pic = mode === "picture"; return `<button class="sl-tile ${pic ? "pic" : ""} ${t === i ? "ok" : ""}" data-i="${i}" style="${pic ? `background-size:${n * 100}% ${n * 100}%;background-position:${(c / (n - 1)) * 100}% ${(r / (n - 1)) * 100}%` : `--tc:${COLS[t % COLS.length]}`}">${pic ? `<small>${t + 1}</small>` : t + 1}</button>`; }).join("");
+      $("#slMsg", host).textContent = done ? `🎉 Solved in ${moves} moves!` : `Moves: ${moves}`;
+    };
+    const setup = () => { tiles = [...Array(n * n).keys()]; let b = n * n - 1, prev = -1; for (let k = 0; k < (n === 3 ? 80 : 160); k++) { const opts2 = [b - 1, b + 1, b - n, b + n].filter(x => x >= 0 && x < n * n && adj(x, b) && x !== prev); const m = pick(opts2); [tiles[b], tiles[m]] = [tiles[m], tiles[b]]; prev = b; b = m; } if (tiles.every((t, i) => t === i)) return setup(); moves = 0; done = false; draw(); };
+    board.addEventListener("click", e => {
+      const b = e.target.closest("[data-i]"); if (!b || done) return; const i = +b.dataset.i, z = blank();
+      if (!adj(i, z)) { bloop(); return; }
+      [tiles[i], tiles[z]] = [tiles[z], tiles[i]]; moves++; plip();
+      if (tiles.every((t, k) => t === k)) { done = true; draw(); addStar(n === 3 ? 2 : 3); celebrate("Sliding puzzle solved!"); } else draw();
+    });
+    $("#slSize", host).addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (!b) return; n = +b.dataset.n; $$("#slSize .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); setup(); });
+    $("#slMode", host).addEventListener("click", e => { const b = e.target.closest("[data-m]"); if (!b) return; mode = b.dataset.m; if (mode === "picture") img = sceneCanvas(rand(0, SCENES.length - 1)).toDataURL(); $$("#slMode .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); draw(); });
+    $("#slShuffle", host).onclick = setup;
+    setup();
+  });
+}
+
+/* ---------- Maze ---------- */
+function maze() {
+  openActivity(host => {
+    const THEMES = [["🐭", "🧀", "mouse", "cheese"], ["🐝", "🌻", "bee", "flower"], ["🦚", "🥭", "peacock", "mango"], ["🐶", "🦴", "puppy", "bone"], ["🚗", "🏠", "car", "house"]];
+    let size = 6, th = 0, walls, px = 0, py = 0, trail = [], done = false, drag = null;
+    host.innerHTML = `<h3>Maze 🌀</h3><p class="hint" id="mzHint"></p>${langRow()}
+      <div class="tabs" id="mzSize">${[[6, "Small"], [9, "Medium"], [12, "Big"]].map(([v, l]) => `<button class="tab" data-n="${v}" aria-selected="${v === size}">${l}</button>`).join("")}</div>
+      <div class="tabs" id="mzTheme">${THEMES.map((t, k) => `<button class="tab" data-t="${k}" aria-selected="${k === th}">${t[0]}→${t[1]}</button>`).join("")}</div>
+      <canvas class="art-canvas" id="mzCv" width="600" height="600" aria-label="Maze"></canvas>
+      <div class="mz-pad"><button class="btn white" data-d="0,-1" aria-label="up">⬆️</button><button class="btn white" data-d="-1,0" aria-label="left">⬅️</button><button class="btn white" data-d="1,0" aria-label="right">➡️</button><button class="btn white" data-d="0,1" aria-label="down">⬇️</button></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn" id="mzNew">🔀 New maze</button></div>`;
+    bindLang(host, () => PZML.maze);
+    const cv = $("#mzCv", host), ctx = cv.getContext("2d"), W = 600;
+    const gen = () => {
+      walls = Array.from({ length: size * size }, () => [1, 1, 1, 1]);
+      const seen = new Uint8Array(size * size), st = [0]; seen[0] = 1;
+      const D = [[0, -1, 0, 2], [1, 0, 1, 3], [0, 1, 2, 0], [-1, 0, 3, 1]];
+      while (st.length) {
+        const cur = st[st.length - 1], cx = cur % size, cy = Math.floor(cur / size);
+        const nb = shuffle(D).filter(([dx, dy]) => { const nx = cx + dx, ny = cy + dy; return nx >= 0 && ny >= 0 && nx < size && ny < size && !seen[ny * size + nx]; });
+        if (!nb.length) { st.pop(); continue; }
+        const [dx, dy, w, ow] = nb[0], nxt = (cy + dy) * size + cx + dx; walls[cur][w] = 0; walls[nxt][ow] = 0; seen[nxt] = 1; st.push(nxt);
+      }
+      px = 0; py = 0; trail = [[0, 0]]; done = false;
+      const T = THEMES[th]; $("#mzHint", host).textContent = `Help the ${T[2]} ${T[0]} get to the ${T[3]} ${T[1]}! Use the arrows, the keyboard, or drag your finger along the path.`;
+      draw();
+    };
+    const draw = () => {
+      const c = W / size; ctx.fillStyle = "#fffaf0"; ctx.fillRect(0, 0, W, W);
+      ctx.fillStyle = "rgba(255,174,26,.35)"; trail.forEach(([x, y]) => ctx.fillRect(x * c + 2, y * c + 2, c - 4, c - 4));
+      ctx.strokeStyle = "#1d2340"; ctx.lineWidth = Math.max(3, c / 9); ctx.lineCap = "round"; ctx.beginPath();
+      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) { const w = walls[y * size + x], X = x * c, Y = y * c; if (w[0]) { ctx.moveTo(X, Y); ctx.lineTo(X + c, Y); } if (w[3]) { ctx.moveTo(X, Y); ctx.lineTo(X, Y + c); } if (y === size - 1 && w[2]) { ctx.moveTo(X, Y + c); ctx.lineTo(X + c, Y + c); } if (x === size - 1 && w[1]) { ctx.moveTo(X + c, Y); ctx.lineTo(X + c, Y + c); } }
+      ctx.stroke();
+      const T = THEMES[th]; ctx.font = `${c * 0.7}px sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(T[1], (size - 0.5) * c, (size - 0.5) * c); ctx.fillText(T[0], (px + 0.5) * c, (py + 0.5) * c);
+    };
+    const move = (dx, dy) => {
+      if (done) return false; const w = walls[py * size + px], side = dy < 0 ? 0 : dx > 0 ? 1 : dy > 0 ? 2 : 3;
+      if (w[side]) { bloop(); return false; }
+      px += dx; py += dy; const last = trail[trail.length - 2];
+      if (last && last[0] === px && last[1] === py) trail.pop(); else trail.push([px, py]);
+      plip(); draw();
+      if (px === size - 1 && py === size - 1) { done = true; const T = THEMES[th]; addStar(size <= 6 ? 1 : size <= 9 ? 2 : 3); celebrate(`The ${T[2]} found the ${T[3]}!`); }
+      return true;
+    };
+    $(".mz-pad", host).addEventListener("click", e => { const b = e.target.closest("[data-d]"); if (!b) return; const [dx, dy] = b.dataset.d.split(",").map(Number); move(dx, dy); });
+    const onKey = e => { const k = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key]; if (!k) return; e.preventDefault(); move(...k); };
+    document.addEventListener("keydown", onKey); cleanup = () => document.removeEventListener("keydown", onKey);
+    cv.onpointerdown = e => { e.preventDefault(); drag = cvPos(cv, e); try { cv.setPointerCapture(e.pointerId); } catch (_) {} };
+    cv.onpointermove = e => { if (!drag) return; const q = cvPos(cv, e), c = W / size, dx = q[0] - drag[0], dy = q[1] - drag[1]; if (Math.max(Math.abs(dx), Math.abs(dy)) < c * 0.55) return; const step = Math.abs(dx) > Math.abs(dy) ? [Math.sign(dx), 0] : [0, Math.sign(dy)]; move(...step); drag = q; };
+    cv.onpointerup = cv.onpointercancel = () => (drag = null);
+    $("#mzSize", host).addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (!b) return; size = +b.dataset.n; $$("#mzSize .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); gen(); });
+    $("#mzTheme", host).addEventListener("click", e => { const b = e.target.closest("[data-t]"); if (!b) return; th = +b.dataset.t; $$("#mzTheme .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); gen(); });
+    $("#mzNew", host).onclick = gen;
+    gen();
+  });
+}
+
+/* ---------- Fruit Sudoku (4 × 4) ---------- */
+function sudoku() {
+  openActivity(host => {
+    const SETS = [["🍎", "🍌", "🍇", "🥭"], ["🐱", "🐶", "🐰", "🐸"], ["⭐", "🌙", "☀️", "☁️"], ["🔴", "🟡", "🔵", "🟢"]];
+    let set = 0, holes = 5, sol = [], cells = [], given = [], sel = -1, done = false;
+    host.innerHTML = `<h3>Fruit Sudoku 🍎</h3><p class="hint">Fill the empty squares. Every row, every column and every 2 × 2 box needs each picture exactly once.</p>${langRow()}
+      <div class="tabs" id="sdLevel">${[[5, "Easy"], [8, "Medium"], [10, "Hard"]].map(([v, l]) => `<button class="tab" data-h="${v}" aria-selected="${v === holes}">${l}</button>`).join("")}</div>
+      <div class="tabs" id="sdSet">${SETS.map((st, k) => `<button class="tab" data-k="${k}" aria-selected="${k === set}">${st.join("")}</button>`).join("")}</div>
+      <div class="sdk" id="sdk"></div>
+      <div class="sdk-pal" id="sdkPal"></div>
+      <div class="big-q" id="sdkMsg">Tap an empty square, then tap a picture.</div>
+      <div class="btn-row" style="justify-content:center"><button class="btn" id="sdkNew">🔀 New puzzle</button></div>`;
+    bindLang(host, () => PZML.sudoku);
+    const grid = $("#sdk", host), msg = t => ($("#sdkMsg", host).textContent = t);
+    const make = () => {
+      let b = [[0, 1, 2, 3], [2, 3, 0, 1], [1, 0, 3, 2], [3, 2, 1, 0]];
+      if (Math.random() < 0.5) b = b[0].map((_, c) => b.map(r => r[c]));
+      if (Math.random() < 0.5) [b[0], b[1]] = [b[1], b[0]];
+      if (Math.random() < 0.5) [b[2], b[3]] = [b[3], b[2]];
+      if (Math.random() < 0.5) b = [b[2], b[3], b[0], b[1]];
+      const sc = Math.random() < 0.5, sc2 = Math.random() < 0.5; b = b.map(r => { r = r.slice(); if (sc) [r[0], r[1]] = [r[1], r[0]]; if (sc2) [r[2], r[3]] = [r[3], r[2]]; return r; });
+      const perm = shuffle([0, 1, 2, 3]); sol = b.flat().map(v => perm[v]);
+      const h = new Set(shuffle([...Array(16).keys()]).slice(0, holes)); given = sol.map((_, i) => !h.has(i)); cells = sol.map((v, i) => (given[i] ? v : null)); sel = -1; done = false;
+      draw(); msg("Tap an empty square, then tap a picture.");
+    };
+    const clash = i => { const v = cells[i]; if (v == null) return false; const r = Math.floor(i / 4), c = i % 4, br = r - (r % 2), bc = c - (c % 2); for (let j = 0; j < 16; j++) { if (j === i || cells[j] !== v) continue; const r2 = Math.floor(j / 4), c2 = j % 4; if (r2 === r || c2 === c || (r2 - (r2 % 2) === br && c2 - (c2 % 2) === bc)) return true; } return false; };
+    const draw = () => {
+      const S = SETS[set];
+      grid.innerHTML = cells.map((v, i) => `<button class="sdk-cell ${given[i] ? "given" : ""} ${i === sel ? "sel" : ""} ${clash(i) ? "bad" : ""} ${i % 4 === 1 ? "rb" : ""} ${Math.floor(i / 4) === 1 ? "bb" : ""}" data-i="${i}" ${given[i] ? "disabled" : ""} aria-label="square ${i + 1}">${v == null ? "" : S[v]}</button>`).join("");
+      $("#sdkPal", host).innerHTML = S.map((e, k) => `<button class="stamp-btn" data-v="${k}">${e}</button>`).join("") + `<button class="stamp-btn" data-v="x" aria-label="clear">🧽</button>`;
+    };
+    grid.addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (!b || done) return; sel = +b.dataset.i; plip(); draw(); });
+    $("#sdkPal", host).addEventListener("click", e => {
+      const b = e.target.closest("[data-v]"); if (!b || done) return;
+      if (sel < 0 || given[sel]) { msg("Tap an empty square first!"); return; }
+      cells[sel] = b.dataset.v === "x" ? null : +b.dataset.v;
+      if (clash(sel)) { bloop(); msg(`Oops! There's already a ${SETS[set][cells[sel]]} in that row, column or box.`); } else plip();
+      draw();
+      if (cells.every((v, i) => v != null && !clash(i))) { done = true; msg("🎉 Super thinking! Every line is perfect!"); addStar(holes <= 5 ? 1 : holes <= 8 ? 2 : 3); celebrate("Sudoku solved!"); }
+    });
+    $("#sdLevel", host).addEventListener("click", e => { const b = e.target.closest("[data-h]"); if (!b) return; holes = +b.dataset.h; $$("#sdLevel .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); make(); });
+    $("#sdSet", host).addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (!b) return; set = +b.dataset.k; $$("#sdSet .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); draw(); });
+    $("#sdkNew", host).onclick = make;
+    make();
+  });
+}
+
+/* ---------- Spot the Difference ---------- */
+function spotdiff() {
+  openActivity(host => {
+    const POOLS = [["🍎", "🍌", "🍇", "🥭", "🍓", "🍉"], ["🐱", "🐶", "🐰", "🐸", "🐵", "🐷"], ["⭐", "🌙", "☀️", "☁️", "🌈", "⚡"], ["🚗", "🚌", "🚲", "🚂", "✈️", "⛵"], ["🌸", "🌻", "🌷", "🍀", "🌵", "🍄"]];
+    let a, b, diffs, found, misses = 0;
+    host.innerHTML = `<h3>Spot the Difference 🔍</h3><p class="hint">The two pictures look the same, but 3 things are different. Tap them!</p>${langRow()}
+      <div class="sp-wrap"><div class="sp-grid" id="spA"></div><div class="sp-grid" id="spB"></div></div>
+      <div class="big-q" id="spMsg"></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn white" id="spHint">💡 Hint</button><button class="btn" id="spNew">🔀 New pictures</button></div>`;
+    bindLang(host, () => PZML.spotdiff);
+    const msg = t => ($("#spMsg", host).textContent = t);
+    const setup = () => {
+      const pool = pick(POOLS); a = Array.from({ length: 20 }, () => pick(pool)); b = a.slice();
+      diffs = shuffle([...Array(20).keys()]).slice(0, 3); diffs.forEach(i => (b[i] = pick(pool.filter(e => e !== a[i]))));
+      found = new Set(); misses = 0;
+      [["#spA", a], ["#spB", b]].forEach(([id, arr]) => ($(id, host).innerHTML = arr.map((e, i) => `<button class="sp-cell" data-i="${i}" aria-label="picture ${i + 1}">${e}</button>`).join("")));
+      msg("Found: 0 of 3");
+    };
+    $(".sp-wrap", host).addEventListener("click", e => {
+      const c = e.target.closest(".sp-cell"); if (!c || found.size === 3) return; const i = +c.dataset.i;
+      if (diffs.includes(i) && !found.has(i)) {
+        found.add(i); ding(); $$(`.sp-cell[data-i="${i}"]`, host).forEach(x => x.classList.add("found"));
+        msg(`Found: ${found.size} of 3`);
+        if (found.size === 3) { addStar(misses <= 3 ? 2 : 1); celebrate("You found all 3 differences!"); msg("🎉 Sharp eyes! You found them all!"); }
+      } else if (!found.has(i)) { misses++; bloop(); c.classList.remove("nope"); void c.offsetWidth; c.classList.add("nope"); }
+    });
+    $("#spHint", host).onclick = () => { const left = diffs.filter(i => !found.has(i)); if (!left.length) return; const i = pick(left); $$(`.sp-cell[data-i="${i}"]`, host).forEach(x => { x.classList.add("hint"); later(() => x.classList.remove("hint"), 1200); }); };
+    $("#spNew", host).onclick = setup;
+    setup();
+  });
+}
+
+/* ---------- Dot to Dot ---------- */
+const DOTS = [
+  { name: "star", ico: "⭐", col: "#ffd21f", pts: [[50, 6], [61, 38], [95, 38], [67, 58], [78, 92], [50, 72], [22, 92], [33, 58], [5, 38], [39, 38]] },
+  { name: "house", ico: "🏠", col: "#ff8c1a", pts: [[20, 90], [20, 45], [50, 12], [80, 45], [80, 90], [60, 90], [60, 65], [40, 65], [40, 90]] },
+  { name: "heart", ico: "❤️", col: "#e0262f", pts: [[50, 90], [22, 64], [8, 42], [10, 24], [24, 12], [40, 14], [50, 28], [60, 14], [76, 12], [90, 24], [92, 42], [78, 64]] },
+  { name: "fish", ico: "🐟", col: "#0f9db3", pts: [[8, 50], [24, 30], [45, 22], [65, 28], [78, 42], [94, 26], [94, 74], [78, 58], [65, 72], [45, 78], [24, 70]] },
+  { name: "boat", ico: "⛵", col: "#1f6fe0", pts: [[10, 64], [46, 64], [46, 8], [82, 58], [52, 58], [52, 64], [90, 64], [76, 88], [24, 88]] },
+  { name: "kite", ico: "🪁", col: "#ee4d7d", pts: [[50, 6], [66, 24], [84, 42], [66, 60], [50, 80], [34, 60], [16, 42], [34, 24]] }
+];
+function dotdot() {
+  openActivity(host => {
+    let di = 0, next = 0, done = false;
+    host.innerHTML = `<h3>Dot to Dot ✏️</h3><p class="hint">Start at 1. Tap the dots in order: 1, 2, 3… What will you draw?</p>${langRow()}
+      <div class="tabs" id="dtPick">${DOTS.map((d, k) => `<button class="tab" data-k="${k}" aria-selected="${k === di}">Picture ${k + 1}</button>`).join("")}</div>
+      <canvas class="art-canvas" id="dtCv" width="600" height="600" aria-label="Dot to dot"></canvas>
+      <div class="big-q" id="dtMsg"></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn" id="dtAgain">↺ Start again</button></div>`;
+    bindLang(host, () => PZML.dots);
+    const cv = $("#dtCv", host), ctx = cv.getContext("2d"), W = 600, P = () => DOTS[di].pts.map(([x, y]) => [(x / 100) * (W - 80) + 40, (y / 100) * (W - 80) + 40]);
+    const draw = () => {
+      const D = DOTS[di], pts = P(); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, W);
+      if (done) { ctx.beginPath(); pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fillStyle = D.col; ctx.fill(); }
+      ctx.strokeStyle = "#1d2340"; ctx.lineWidth = 6; ctx.lineJoin = ctx.lineCap = "round"; ctx.beginPath();
+      for (let i = 0; i < next; i++) { const [x, y] = pts[i]; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      if (done) ctx.closePath(); ctx.stroke();
+      pts.forEach(([x, y], i) => {
+        const isNext = i === next && !done;
+        if (isNext) { ctx.fillStyle = "rgba(255,174,26,.45)"; ctx.beginPath(); ctx.arc(x, y, 24, 0, Math.PI * 2); ctx.fill(); }
+        ctx.fillStyle = i < next ? "#22a86a" : "#1d2340"; ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#a3192f"; ctx.font = "800 26px 'Baloo 2', sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        const ox = x < W / 2 ? -26 : 26, oy = y < W / 2 ? -22 : 22; ctx.fillText(String(i + 1), x + ox, y + oy);
+      });
+    };
+    const start = () => { next = 0; done = false; draw(); $("#dtMsg", host).textContent = "Find number 1!"; };
+    cv.onpointerdown = e => {
+      if (done) return; const q = cvPos(cv, e), pts = P();
+      const hit = pts.findIndex(([x, y]) => Math.hypot(x - q[0], y - q[1]) < 40);
+      if (hit < 0) return;
+      if (hit !== next) { bloop(); $("#dtMsg", host).textContent = `That's ${hit + 1}. Find number ${next + 1}!`; say(`Find number ${next + 1}`); return; }
+      next++; say(String(next)); plip();
+      if (next === pts.length) { done = true; const D = DOTS[di]; draw(); $("#dtMsg", host).textContent = `It's a ${D.name}! ${D.ico}`; addStar(2); celebrate(`You drew a ${D.name}!`); return; }
+      draw(); $("#dtMsg", host).textContent = `Now find ${next + 1}!`;
+    };
+    $("#dtPick", host).addEventListener("click", e => { const b = e.target.closest("[data-k]"); if (!b) return; di = +b.dataset.k; $$("#dtPick .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); start(); });
+    $("#dtAgain", host).onclick = start;
+    start();
+  });
+}
 
 /* ======================= ART STUDIO ======================= */
 const ART_COLS = ["#1d2340", "#ffffff", "#e0262f", "#ff8c1a", "#ffd21f", "#2fb35a", "#0f9db3", "#1f6fe0", "#8a3fd1", "#ff8fb8", "#8b5a2b", "#a3192f"];
@@ -3868,7 +4215,12 @@ const MISSIONS = [
   ["Feed your pet", () => go("pet")],
   ["Make a beat", () => startGame("music")],
   ["Draw something and make it move", () => startGame("freedraw")],
-  ["Make your own storybook", () => startGame("storybook")]
+  ["Make your own storybook", () => startGame("storybook")],
+  ["Solve a jigsaw puzzle", () => startGame("jigsaw")],
+  ["Find the way through a maze", () => startGame("maze")],
+  ["Play Fruit Sudoku", () => startGame("sudoku")],
+  ["Spot the difference", () => startGame("spotdiff")],
+  ["Join the dots", () => startGame("dotdot")]
 ];
 (function renderMission() {
   const day = Math.floor(Date.now() / 86400000);
