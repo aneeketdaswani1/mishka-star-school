@@ -657,6 +657,55 @@ textarea.g-input { resize: vertical; }
 .sp-cell.hint { animation: bump .4s 3; background: #fff4d6; }
 @media (max-width: 520px) { .sp-wrap { grid-template-columns: 1fr; } }
 
+/* brain gym */
+.tile .best { font-size: .78rem; font-weight: 700; opacity: .95; min-height: 1em; }
+.best-new { margin: 0; font: 800 1.3rem var(--display); color: var(--rose); animation: bump .6s 2; }
+.gg-stage { position: relative; height: 300px; border: 3px solid var(--ink); border-radius: 22px; background: linear-gradient(#e9fbf3, #fff); overflow: hidden; }
+.gg-item { position: absolute; transform: translate(-50%, -50%) scale(0); width: 96px; height: 96px; border-radius: 50%; border: 0; background: transparent; font-size: 4rem; padding: 0; transition: transform .15s; }
+.gg-item.pop { transform: translate(-50%, -50%) scale(1); }
+.gg-item.yes { background: #def6ea; box-shadow: 0 0 0 4px var(--parrot); }
+.gg-item.no { background: #ffe3ea; box-shadow: 0 0 0 4px var(--rose); }
+.dn-show { font-size: 7rem; line-height: 1.2; text-align: center; min-height: 1.3em; border: 3px solid var(--ink); border-radius: 24px; background: var(--sky); transition: background .2s; }
+.dn-show.sun { background: #fff4c2; }
+.dn-show.moon { background: #1e2a63; }
+.dn-show.late { opacity: .4; }
+.ms-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; min-height: 90px; align-items: center; }
+.ms-item { font-size: clamp(2.4rem, 10vw, 3.4rem); width: 1.6em; height: 1.6em; display: grid; place-items: center; background: var(--card); border: 3px solid var(--ink); border-radius: 18px; }
+.ms-item.cover { background: var(--lilac); }
+.ms-item.gap { background: #fff4d6; border-style: dashed; }
+.ff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: min(100%, 340px); margin: 0 auto; padding: 14px; background: #141a3d; border-radius: 24px; border: 3px solid var(--ink); }
+.ff-jar { aspect-ratio: 1; border: 3px solid #5b6386; border-radius: 22px 22px 30px 30px; background: rgba(255, 255, 255, .08); padding: 0; font-size: 2.4rem; }
+.ff-jar span { opacity: 0; transition: opacity .15s; }
+.ff-jar.lit { background: #ffe066; box-shadow: 0 0 24px 8px rgba(255, 224, 102, .7); border-color: #ffe066; }
+.ff-jar.lit span { opacity: 1; }
+.ff-target { text-align: center; font: 800 1.6rem var(--display); }
+.ff-target span { font-size: 3rem; vertical-align: middle; }
+.fs-grid { display: grid; gap: 6px; width: min(100%, 420px); margin: 0 auto; }
+.fs-cell { aspect-ratio: 1; border: 2px solid var(--soft); border-radius: 12px; background: var(--card); font-size: clamp(1.2rem, 6vw, 2.2rem); padding: 0; }
+.fs-cell.nope { animation: shake .3s; background: #ffe3ea; }
+.cs-card { position: relative; width: 150px; height: 150px; margin: 0 auto; border: 4px solid var(--ink); border-radius: 22px; background: var(--card); display: grid; place-items: center; box-shadow: 4px 4px 0 var(--ink); }
+.cs-card.pop { animation: popin .3s; }
+.cs-card .cs-shape { width: 100px; height: 100px; }
+.cs-sign { position: absolute; top: -18px; right: -18px; font-size: 2rem; background: #fff; border: 3px solid var(--ink); border-radius: 50%; width: 52px; height: 52px; display: grid; place-items: center; }
+.cs-bins { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: min(100%, 420px); margin: 0 auto; }
+.cs-bin { display: grid; justify-items: center; gap: 4px; padding: 12px; border: 3px solid var(--ink); border-radius: 20px; background: #fff8e1; box-shadow: 4px 4px 0 var(--ink); }
+.cs-bin .cs-shape { width: 70px; height: 70px; }
+.cs-bin small { font-weight: 700; text-transform: capitalize; }
+.cs-bin.right { background: #def6ea; }
+.cs-bin.wrong { background: #ffe3ea; animation: shake .35s; }
+.lc-ear { font-size: 6rem; text-align: center; line-height: 1.2; }
+.lc-ear.on { animation: bump .8s infinite; }
+.lc-nums { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; width: min(100%, 460px); margin: 0 auto; }
+.lc-nums .opt { min-height: 60px; padding: 4px; }
+.br-stage { height: 320px; display: grid; place-items: center; border: 3px solid var(--ink); border-radius: 24px; background: radial-gradient(circle, #eaf6ff, #c9e4ff); overflow: hidden; }
+.br-bubble { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; font-size: 3rem; background: radial-gradient(circle at 35% 30%, #fff, #9fd8ff 60%, #6aa8ff); box-shadow: 0 0 0 6px rgba(255, 255, 255, .6); transition: transform 4s ease-in-out; transform: scale(1); }
+.br-bubble.in { transform: scale(2.3); }
+.br-bubble.hold { transition-duration: .2s; }
+.br-bubble.out { transform: scale(1); transition-duration: 4.5s; }
+.br-dots { display: flex; gap: 8px; justify-content: center; }
+.br-dots i { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink); background: var(--card); }
+.br-dots i.done { background: #3a8ee6; }
+
 /* quiz */
 .quiz { display: grid; gap: 16px; justify-items: center; text-align: center; }
 .q-dots { display: flex; gap: 6px; }
@@ -806,6 +855,7 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
       <button class="tile" style="--c: #2e7d5b" data-go="urdu"><span class="ico">✍️</span><b>Urdu</b><span class="sub">Letters &amp; words</span></button>
       <button class="tile" style="--c: var(--parrot)" data-go="games"><span class="ico">🎮</span><b>Games</b><span class="sub">Match, pop, trace</span></button>
       <button class="tile" style="--c: #6a4cc9" data-go="puzzles"><span class="ico">🧩</span><b>Puzzles</b><span class="sub">Jigsaw, maze, sudoku…</span></button>
+      <button class="tile" style="--c: #d6336c" data-go="brain"><span class="ico">🧠</span><b>Brain Gym</b><span class="sub">Focus, memory, calm</span></button>
       <button class="tile" style="--c: #e84a8a" data-go="art"><span class="ico">🎨</span><b>Art Studio</b><span class="sub">Draw, colour, design</span></button>
       <button class="tile" style="--c: var(--lilac)" data-go="songs"><span class="ico">🎵</span><b>Songs &amp; Dance</b><span class="sub">Sing along, freeze dance</span></button>
       <button class="tile" style="--c: var(--ajrak-indigo)" data-go="studio"><span class="ico">🎬</span><b>Video Studio</b><span class="sub">Be a star on camera</span></button>
@@ -1055,6 +1105,44 @@ canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-
     </div>
     <div class="panel"><h3>My sticker book</h3><div class="sticker-grid" id="stickerGrid"></div></div>
     <div class="panel"><h3>My surprises</h3><div class="surprise-list" id="surpriseList"></div></div>
+  </section>
+
+  <!-- BRAIN GYM -->
+  <section class="screen" id="s-brain" hidden>
+    <button class="back" data-go="home">← Home</button>
+    <div class="screen-title"><h2>Brain Gym</h2><span class="clap">Train your brain! 💪🧠</span></div>
+    <p class="hint" style="margin:0">Short games that grow the brain's "super skills": paying attention, remembering, stopping to think, switching rules and staying calm.</p>
+    <h3 class="sec">🛑 Stop and think</h3>
+    <div class="tiles">
+      <button class="tile" style="--c: var(--parrot)" data-game="gonogo"><span class="ico">🍎</span><b>Fruit or Bug?</b><span class="sub">Tap fruit, not bugs!</span><span class="best" data-best="gonogo"></span></button>
+      <button class="tile" style="--c: var(--ajrak-indigo)" data-game="daynight"><span class="ico">🌙</span><b>Day &amp; Night</b><span class="sub">Do the opposite!</span><span class="best" data-best="daynight"></span></button>
+    </div>
+    <h3 class="sec">🧠 Memory</h3>
+    <div class="tiles">
+      <button class="tile dark-text" style="--c: var(--mango)" data-game="missing"><span class="ico">🔎</span><b>What's Missing?</b><span class="sub">Remember and find</span><span class="best" data-best="missing"></span></button>
+      <button class="tile" style="--c: #3a2f7a" data-game="firefly"><span class="ico">✨</span><b>Firefly Memory</b><span class="sub">Repeat the order</span><span class="best" data-best="firefly"></span></button>
+      <button class="tile" style="--c: var(--teal)" data-game="simon"><span class="ico">🚦</span><b>Copy Me!</b><span class="sub">Colours and sounds</span></button>
+      <button class="tile" style="--c: var(--ajrak-indigo)" data-game="memory"><span class="ico">🃏</span><b>Memory Match</b><span class="sub">Find the pairs</span></button>
+    </div>
+    <h3 class="sec">👀 Focus &amp; switch</h3>
+    <div class="tiles">
+      <button class="tile" style="--c: var(--rose)" data-game="findfast"><span class="ico">⚡</span><b>Find It Fast</b><span class="sub">Spot it quickly</span><span class="best" data-best="findfast"></span></button>
+      <button class="tile" style="--c: var(--lilac)" data-game="cardsort"><span class="ico">🔀</span><b>Switch Sort</b><span class="sub">Colour or shape?</span><span class="best" data-best="cardsort"></span></button>
+      <button class="tile dark-text" style="--c: #ffd34d" data-game="countclaps"><span class="ico">👂</span><b>Listen &amp; Count</b><span class="sub">Count the sounds</span><span class="best" data-best="countclaps"></span></button>
+    </div>
+    <h3 class="sec">🫧 Calm &amp; focus</h3>
+    <div class="tiles">
+      <button class="tile" style="--c: #3a8ee6" data-game="breathe"><span class="ico">🫧</span><b>Calm Bubble</b><span class="sub">Breathe in, breathe out</span></button>
+    </div>
+    <details class="grownups"><summary>For grown-ups: what these train</summary>
+      <ul>
+        <li><b>Stop and think</b> (Fruit or Bug, Day &amp; Night) trains self-control: holding back a quick wrong reaction.</li>
+        <li><b>Memory</b> (What's Missing, Firefly, Copy Me) trains working memory: keeping things in mind while you use them.</li>
+        <li><b>Switch Sort</b> trains flexible thinking: changing to a new rule. <b>Find It Fast</b> and <b>Listen &amp; Count</b> train attention.</li>
+        <li><b>Calm Bubble</b> slow breathing helps children settle before homework or after a busy day.</li>
+        <li>A few minutes a day works best. Her best scores appear on each tile.</li>
+      </ul>
+    </details>
   </section>
 
   <!-- PUZZLES -->
@@ -1619,7 +1707,7 @@ function playSong(song = currentSong, box = $("#lyrics"), reward = true, onEnd) 
 }
 
 /* ---------- router ---------- */
-const SCREENS = ["home","english","maths","sindhi","urdu","games","puzzles","songs","studio","stickers","science","art","pet","progress","activity"];
+const SCREENS = ["home","english","maths","sindhi","urdu","games","puzzles","brain","songs","studio","stickers","science","art","pet","progress","activity"];
 let lastScreen = "home";
 let cleanup = null;
 /* Delayed actions only run if the child is still on the same screen. */
@@ -1636,6 +1724,7 @@ function go(name) {
   if (name === "stickers") renderPrizes();
   if (name === "progress") renderProgress();
   if (name === "art") renderGallery();
+  if (name === "brain") renderBrainBest();
   if (name === "pet") renderPet();
   if (name === "english") renderSchoolWords();
   if (name === "home") renderPetChip();
@@ -1905,7 +1994,7 @@ function startQuiz(kind, rounds = 6) {
 }
 
 /* ---------- games ---------- */
-function startGame(kind) { ({ memory, balloons, trace, freeze, simon, ttt, race, snakes, shapes3d, kite, sayit, sounds, spell, colourlab, volcano, sinkfloat, magnet, plant, matter, homes, moles, freedraw, colouring, pixels, build, shapeplay, fashion, cake, stories, music, storybook, jigsaw, slider, maze, sudoku, spotdiff, dotdot })[kind]?.(); }
+function startGame(kind) { ({ memory, balloons, trace, freeze, simon, ttt, race, snakes, shapes3d, kite, sayit, sounds, spell, colourlab, volcano, sinkfloat, magnet, plant, matter, homes, moles, freedraw, colouring, pixels, build, shapeplay, fashion, cake, stories, music, storybook, jigsaw, slider, maze, sudoku, spotdiff, dotdot, gonogo, daynight, missing, firefly, findfast, cardsort, countclaps, breathe })[kind]?.(); }
 
 function memory() {
   openActivity(host => {
@@ -2488,6 +2577,284 @@ $("#petBox").addEventListener("click", e => {
   const h = e.target.closest("[data-hat]"); if (h && pet && !h.disabled) { pet.hat = h.dataset.hat; store.set("pet", pet); renderPet(); plip(); }
 });
 $("#petBox").addEventListener("change", e => { if (e.target.id === "petName" && pet) { pet.name = e.target.value.trim() || PETS[pet.type].name; store.set("pet", pet); renderPet(); } });
+
+/* ======================= BRAIN GYM ======================= */
+let brainBest = store.get("brainBest", {});
+const LOWER_IS_BETTER = { findfast: true };
+function saveBest(k, v) { const old = brainBest[k], better = old == null || (LOWER_IS_BETTER[k] ? v < old : v > old); if (better) { brainBest[k] = v; store.set("brainBest", brainBest); } return better && old != null; }
+const BEST_FMT = { gonogo: v => `Best: ${v}%`, daynight: v => `Best: ${v}/16`, missing: v => `Best: ${v} things`, firefly: v => `Best: ${v} fireflies`, findfast: v => `Best: ${v}s`, cardsort: v => `Best: ${v}/18`, countclaps: v => `Best: ${v}/6` };
+function renderBrainBest() { $$("[data-best]").forEach(el => { const k = el.dataset.best, v = brainBest[k]; el.textContent = v == null ? "" : "🏅 " + BEST_FMT[k](v); }); }
+const BRML = {
+  gonogo: [{ ur: "صرف پھلوں پر ٹیپ کرو، کیڑوں پر نہیں!", hi: "सिर्फ़ फलों पर टैप करो, कीड़ों पर नहीं!", sd: "रुगो मेवनि ते टैप करियो, जीतनि ते न!" }, { ur: "اب الٹا! صرف کیڑوں پر ٹیپ کرو!", hi: "अब उल्टा! सिर्फ़ कीड़ों पर टैप करो!", sd: "हाणे उबतड़! रुगो जीतनि ते टैप करियो!" }],
+  daynight: { ur: "الٹا کھیل! سورج دکھے تو چاند دباؤ، چاند دکھے تو سورج دباؤ۔", hi: "उल्टा खेल! सूरज दिखे तो चाँद दबाओ, चाँद दिखे तो सूरज दबाओ।", sd: "उबतड़ रांद! सिजु डिसो त चंडु दबायो, चंडु डिसो त सिजु दबायो।" },
+  missing: { ur: "غور سے دیکھو اور یاد رکھو۔ کون سی چیز غائب ہو گئی؟", hi: "ग़ौर से देखो और याद रखो। कौन सी चीज़ ग़ायब हो गई?", sd: "ध्यान सां डिसो ऐं याद रखो। कहिड़ी शइ ग़ाइब थी वेई?" },
+  firefly: { ur: "جگنو جہاں چمکیں، اسی ترتیب سے وہاں ٹیپ کرو!", hi: "जुगनू जहाँ चमकें, उसी तरतीब से वहाँ टैप करो!", sd: "जुगनू जिते चमकनि, उन्हीअ तरतीब सां उते टैप करियो!" },
+  findfast: { ur: "جلدی سے ڈھونڈو! یہ تصویر کہاں ہے؟", hi: "जल्दी से ढूंढो! ये तस्वीर कहाँ है?", sd: "जल्दी गोल्हियो! ही तस्वीर किथे आहे?" },
+  cardsort: [{ ur: "رنگ کے حساب سے ڈبے میں ڈالو!", hi: "रंग के हिसाब से डिब्बे में डालो!", sd: "रंग जे हिसाब सां डबे में विझो!" }, { ur: "اب شکل کے حساب سے ڈالو!", hi: "अब शक्ल के हिसाब से डालो!", sd: "हाणे शक्ल जे हिसाब सां विझो!" }, { ur: "ہوشیار! نشان دیکھو: رنگ یا شکل؟", hi: "होशियार! निशान देखो: रंग या शक्ल?", sd: "होशियार! निशान डिसो: रंगु या शक्ल?" }],
+  countclaps: { ur: "آنکھیں بند کرو اور غور سے سنو۔ کتنی آوازیں آئیں؟", hi: "आँखें बंद करो और ग़ौर से सुनो। कितनी आवाज़ें आईं?", sd: "अखियूं बंद करियो ऐं ध्यान सां बुधो। केतिरा आवाज़ आया?" }
+};
+const brainDone = (k, v, text, earned) => { const rec = saveBest(k, v); addStar(earned); celebrate(rec ? "New brain record! 🏅" : text); return rec; };
+const resultBox = (title, line, rec, again) => `<div class="result"><div class="trophy">🧠</div><h3>${title}</h3><p style="margin:0">${line}</p>${rec ? `<p class="best-new">🏅 New record!</p>` : ""}<div class="btn-row" style="justify-content:center"><button class="btn go" id="brAgain">Play again</button><button class="btn white" data-go="brain">Brain Gym</button></div></div>`;
+
+/* ---------- Fruit or Bug? (go / no-go, then the rule flips) ---------- */
+function gonogo() {
+  openActivity(host => {
+    const GOOD = ["🍎", "🍌", "🍇", "🥭", "🍓", "🍉", "🍊", "🍐"], BAD = ["🐛", "🪲", "🕷️", "🐜"];
+    let round = 0, i = 0, hits = 0, wrong = 0, targets = 0, cur = null, tapped = false; const timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>Fruit or Bug? 🍎🐛</h3><p class="big-q" id="ggRule">Tap only the FRUITS. Don't tap the bugs!</p>${langRow()}
+      <div class="gg-stage" id="ggStage"><button class="gg-item" id="ggItem" aria-label="Tap if it matches the rule"></button></div>
+      <div class="ttt-score"><span>✅ <b id="ggHit">0</b></span><span>❌ <b id="ggWrong">0</b></span><span>Round <b id="ggRound">1</b> of 2</span></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="ggGo">▶ Start</button></div>`;
+    bindLang(host, () => BRML.gonogo[round]);
+    const item = $("#ggItem", host), N = 18;
+    const isTarget = e => (round === 0 ? GOOD.includes(e) : BAD.includes(e));
+    const show = () => {
+      if (i >= N) return endRound();
+      const wantTarget = Math.random() < 0.6, e = round === 0 ? (wantTarget ? pick(GOOD) : pick(BAD)) : wantTarget ? pick(BAD) : pick(GOOD);
+      cur = e; tapped = false; if (isTarget(e)) targets++; i++;
+      item.textContent = e; item.style.left = rand(15, 85) + "%"; item.style.top = rand(20, 80) + "%"; item.className = "gg-item pop";
+      timers.push(later(() => { item.className = "gg-item"; item.textContent = ""; cur = null; timers.push(later(show, 300)); }, round === 0 ? 1100 : 950));
+    };
+    const endRound = () => {
+      if (round === 0) { round = 1; i = 0; $("#ggRound", host).textContent = 2; $("#ggRule", host).textContent = "🔄 Switch! Now tap only the BUGS!"; say("Switch! Now tap only the bugs!"); timers.push(later(show, 2600)); return; }
+      const pct = Math.max(0, Math.round(((hits - wrong) / Math.max(1, targets)) * 100));
+      const rec = brainDone("gonogo", pct, "Super self-control!", pct >= 80 ? 3 : pct >= 50 ? 2 : 1);
+      host.innerHTML = resultBox(`You scored ${pct}%!`, `You tapped ${hits} right and ${wrong} wrong. Stopping to think makes your brain strong!`, rec);
+      $("#brAgain", host).onclick = gonogo;
+    };
+    item.onclick = () => { if (!cur || tapped) return; tapped = true; if (isTarget(cur)) { hits++; ding(); item.classList.add("yes"); } else { wrong++; bloop(); item.classList.add("no"); } $("#ggHit", host).textContent = hits; $("#ggWrong", host).textContent = wrong; };
+    $("#ggGo", host).onclick = () => { $("#ggGo", host).hidden = true; say("Tap only the fruits!"); timers.push(later(show, 1200)); };
+  });
+}
+
+/* ---------- Day & Night (do the opposite) ---------- */
+function daynight() {
+  openActivity(host => {
+    let i = 0, right = 0, cur = null, busy = true, tid = 0; const N = 16, timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>Day &amp; Night 🌞🌙</h3><p class="big-q">See the ☀️ sun? Tap 🌙 NIGHT.<br>See the 🌙 moon? Tap ☀️ DAY.</p>${langRow()}
+      <div class="dn-show" id="dnShow">❓</div>
+      <div class="q-options"><button class="opt dn-btn" data-v="day">☀️ Day</button><button class="opt dn-btn" data-v="night">🌙 Night</button></div>
+      <div class="ttt-score"><span>✅ <b id="dnRight">0</b></span><span><b id="dnI">0</b> / ${N}</span></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="dnGo">▶ Start</button></div>`;
+    bindLang(host, () => BRML.daynight);
+    const shown = $("#dnShow", host);
+    const next = () => {
+      if (i >= N) { const rec = brainDone("daynight", right, "Opposite master!", right >= 14 ? 3 : right >= 10 ? 2 : 1); host.innerHTML = resultBox(`${right} out of ${N}!`, "Doing the opposite is tricky. Your brain worked hard!", rec); $("#brAgain", host).onclick = daynight; return; }
+      const my = ++tid; cur = Math.random() < 0.5 ? "sun" : "moon"; i++; busy = false; shown.textContent = cur === "sun" ? "☀️" : "🌙"; shown.className = "dn-show " + cur;
+      $("#dnI", host).textContent = i;
+      timers.push(later(() => { if (!busy && my === tid) { busy = true; bloop(); shown.classList.add("late"); timers.push(later(next, 500)); } }, 2400));
+    };
+    $$(".dn-btn", host).forEach(b => b.onclick = () => {
+      if (busy || !cur) return; busy = true;
+      const ok = (cur === "sun" && b.dataset.v === "night") || (cur === "moon" && b.dataset.v === "day");
+      if (ok) { right++; ding(); b.classList.add("right"); } else { bloop(); b.classList.add("wrong"); }
+      $("#dnRight", host).textContent = right;
+      timers.push(later(() => { $$(".dn-btn", host).forEach(x => x.classList.remove("right", "wrong")); shown.textContent = ""; timers.push(later(next, 350)); }, 450));
+    });
+    $("#dnGo", host).onclick = () => { $("#dnGo", host).hidden = true; say("Remember, do the opposite!"); timers.push(later(next, 1600)); };
+  });
+}
+
+/* ---------- What's Missing? (Kim's game) ---------- */
+function missing() {
+  openActivity(host => {
+    const POOL = ["🍎", "🚗", "⚽", "🐱", "🎈", "⭐", "🍌", "🐟", "🌸", "🕰️", "🎁", "🪁", "🦆", "🍦", "🚂", "🧸", "🌙", "🥭", "🐘", "✏️"];
+    let n = 3, round = 0, best = 0, items = []; const ROUNDS = 6, timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>What's Missing? 🔎</h3><p class="hint">Look carefully and remember everything. Then one thing will disappear!</p>${langRow()}
+      <div class="big-q" id="msMsg">Get ready…</div>
+      <div class="ms-row" id="msRow"></div>
+      <div class="q-options" id="msOpts" hidden></div>
+      <div class="ttt-score"><span>Round <b id="msRound">1</b> of ${ROUNDS}</span><span>Things to remember: <b id="msN">3</b></span></div>`;
+    bindLang(host, () => BRML.missing);
+    const row = $("#msRow", host), op = $("#msOpts", host), msg = t => ($("#msMsg", host).textContent = t);
+    const play = () => {
+      if (round >= ROUNDS) { const rec = brainDone("missing", best, "Memory star!", best >= 6 ? 3 : best >= 4 ? 2 : 1); host.innerHTML = resultBox(`You remembered up to ${best} things!`, "Your memory is getting stronger every time you play.", rec); $("#brAgain", host).onclick = missing; return; }
+      round++; $("#msRound", host).textContent = round; $("#msN", host).textContent = n;
+      items = shuffle(POOL).slice(0, n); op.hidden = true;
+      row.innerHTML = items.map(e => `<span class="ms-item">${e}</span>`).join(""); msg("👀 Remember these!"); say("Remember these!");
+      timers.push(later(() => {
+        row.innerHTML = items.map(() => `<span class="ms-item cover">🙈</span>`).join(""); msg("Close your eyes… 🙈");
+        timers.push(later(() => {
+          const gone = pick(items), gi = items.indexOf(gone);
+          row.innerHTML = items.map((e, k) => `<span class="ms-item ${k === gi ? "gap" : ""}">${k === gi ? "❓" : e}</span>`).join("");
+          msg("What's missing?"); say("What's missing?");
+          const choices = shuffle([gone, ...shuffle(POOL.filter(e => !items.includes(e))).slice(0, 2), ...shuffle(items.filter(e => e !== gone)).slice(0, 1)]);
+          op.innerHTML = choices.map(e => `<button class="opt emoji" data-v="${e}">${e}</button>`).join(""); op.hidden = false;
+          $$(".opt", op).forEach(b => b.onclick = () => {
+            $$(".opt", op).forEach(x => (x.disabled = true));
+            if (b.dataset.v === gone) { ding(); b.classList.add("right"); best = Math.max(best, n); n = Math.min(8, n + 1); msg("Yes! Great memory! 🎉"); }
+            else { bloop(); b.classList.add("wrong"); n = Math.max(3, n - 1); msg(`It was the ${gone}!`); $$(".gap", row).forEach(g => (g.textContent = gone)); }
+            timers.push(later(play, 1500));
+          });
+        }, 900));
+      }, 2200 + n * 500));
+    };
+    timers.push(later(play, 800));
+  });
+}
+
+/* ---------- Firefly Memory (spatial sequence) ---------- */
+function firefly() {
+  openActivity(host => {
+    let len = 2, seq = [], pos = 0, lives = 2, best = 0, busy = true; const timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>Firefly Memory ✨</h3><p class="hint">Watch the fireflies light up, then tap the jars in the same order.</p>${langRow()}
+      <div class="ff-grid" id="ffGrid">${Array.from({ length: 9 }, (_, i) => `<button class="ff-jar" data-i="${i}" aria-label="jar ${i + 1}"><span>✨</span></button>`).join("")}</div>
+      <div class="big-q" id="ffMsg"></div>
+      <div class="ttt-score"><span>Fireflies: <b id="ffLen">2</b></span><span>Lives: <b id="ffLives">❤️❤️</b></span></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="ffGo">▶ Start</button></div>`;
+    bindLang(host, () => BRML.firefly);
+    const jars = $$(".ff-jar", host), msg = t => ($("#ffMsg", host).textContent = t);
+    const glow = (i, ms = 550) => { jars[i].classList.add("lit"); const a = audio(); if (a) tone(500 + i * 70, a.currentTime, 0.25, "sine", 0.15); timers.push(later(() => jars[i].classList.remove("lit"), ms)); };
+    const round = () => {
+      seq = []; while (seq.length < len) { const c = rand(0, 8); if (c !== seq[seq.length - 1]) seq.push(c); }
+      pos = 0; busy = true; msg("👀 Watch…"); $("#ffLen", host).textContent = len;
+      seq.forEach((c, k) => timers.push(later(() => glow(c), 600 + k * 800)));
+      timers.push(later(() => { busy = false; msg("Your turn!"); }, 600 + seq.length * 800));
+    };
+    const end = () => { const rec = brainDone("firefly", best, "Super memory!", best >= 5 ? 3 : best >= 3 ? 2 : 1); host.innerHTML = resultBox(`You remembered ${best} fireflies in a row!`, "Grown-ups remember about 5 to 7. Keep practising!", rec); $("#brAgain", host).onclick = firefly; };
+    jars.forEach((j, i) => j.onclick = () => {
+      if (busy) return; glow(i, 250);
+      if (i !== seq[pos]) {
+        busy = true; bloop(); lives--; $("#ffLives", host).textContent = "❤️".repeat(lives) || "💔";
+        if (lives <= 0) { timers.push(later(end, 900)); return; }
+        msg("Oops! Watch again…"); timers.push(later(round, 1200)); return;
+      }
+      pos++;
+      if (pos === seq.length) { busy = true; best = Math.max(best, len); ding(); msg("Yes! One more firefly next time!"); len = Math.min(9, len + 1); timers.push(later(round, 1300)); }
+    });
+    $("#ffGo", host).onclick = () => { $("#ffGo", host).hidden = true; round(); };
+  });
+}
+
+/* ---------- Find It Fast (visual search) ---------- */
+function findfast() {
+  openActivity(host => {
+    const SETS = [["🐸", "🐢", "🦎", "🐊", "🐍"], ["🍎", "🍅", "🍒", "🍓", "🌶️"], ["🌙", "⭐", "☀️", "🌟", "💫"], ["🐶", "🐱", "🐻", "🐼", "🐨"], ["🚗", "🚕", "🚙", "🚓", "🚌"], ["🌸", "🌺", "🌷", "🌹", "🌼"]];
+    let found = 0, t0 = 0, target = "", size = 3, tick = 0; const N = 10;
+    cleanup = () => clearInterval(tick);
+    host.innerHTML = `<h3>Find It Fast ⚡</h3><p class="hint">Find the picture shown at the top as fast as you can. The grid gets bigger!</p>${langRow()}
+      <div class="ff-target" id="fTarget">Ready?</div>
+      <div class="fs-grid" id="fGrid"></div>
+      <div class="ttt-score"><span>Found: <b id="fFound">0</b> / ${N}</span><span>⏱️ <b id="fTime">0.0</b>s</span></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="fGo">▶ Start</button></div>`;
+    bindLang(host, () => BRML.findfast);
+    const grid = $("#fGrid", host);
+    const next = () => {
+      if (found >= N) { clearInterval(tick); const secs = Math.round((performance.now() - t0) / 100) / 10; const rec = brainDone("findfast", secs, "Eagle eyes!", secs < 25 ? 3 : secs < 45 ? 2 : 1); host.innerHTML = resultBox(`All found in ${secs} seconds!`, "Sharp eyes and a focused brain!", rec); $("#brAgain", host).onclick = findfast; return; }
+      size = Math.min(6, 3 + Math.floor(found / 2)); const set = pick(SETS); target = pick(set); const others = set.filter(e => e !== target);
+      const at = rand(0, size * size - 1);
+      $("#fTarget", host).innerHTML = `Find: <span>${target}</span>`;
+      grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+      grid.innerHTML = Array.from({ length: size * size }, (_, k) => `<button class="fs-cell" data-t="${k === at ? 1 : 0}">${k === at ? target : pick(others)}</button>`).join("");
+    };
+    grid.addEventListener("click", e => { const b = e.target.closest(".fs-cell"); if (!b || !t0) return; if (b.dataset.t === "1") { found++; ding(); $("#fFound", host).textContent = found; next(); } else { bloop(); b.classList.remove("nope"); void b.offsetWidth; b.classList.add("nope"); } });
+    $("#fGo", host).onclick = () => { $("#fGo", host).hidden = true; t0 = performance.now(); tick = setInterval(() => { const el = $("#fTime", host); if (el) el.textContent = ((performance.now() - t0) / 1000).toFixed(1); }, 100); next(); };
+  });
+}
+
+/* ---------- Switch Sort (colour, then shape, then mixed) ---------- */
+function cardsort() {
+  openActivity(host => {
+    const COL = { red: "#e0262f", blue: "#1f6fe0" }, SH = { star: '<polygon points="50,6 61,38 95,38 67,59 78,93 50,72 22,93 33,59 5,38 39,38"/>', heart: '<path d="M50 88 C10 60 4 34 22 20 C36 9 48 18 50 28 C52 18 64 9 78 20 C96 34 90 60 50 88 Z"/>' };
+    const card = (c, sh) => `<svg viewBox="0 0 100 100" class="cs-shape" aria-label="${c} ${sh}"><g fill="${COL[c]}" stroke="#1d2340" stroke-width="5" stroke-linejoin="round">${SH[sh]}</g></svg>`;
+    const BINS = [["red", "star"], ["blue", "heart"]];
+    let phase = 0, i = 0, right = 0, rule = "colour", cur = null, busy = false; const PER = 6, timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>Switch Sort 🔀</h3><div class="big-q" id="csRule"></div>${langRow()}
+      <div class="cs-card" id="csCard"></div>
+      <div class="cs-bins">${BINS.map(([c, sh], k) => `<button class="cs-bin" data-b="${k}">${card(c, sh)}<small>${c} ${sh}</small></button>`).join("")}</div>
+      <div class="ttt-score"><span>✅ <b id="csRight">0</b></span><span>Card <b id="csI">0</b> / ${PER * 3}</span></div>`;
+    bindLang(host, () => BRML.cardsort[phase]);
+    const RULES = ["Sort by COLOUR 🎨", "Now sort by SHAPE 🔷", "Look at the sign: 🎨 = colour, 🔷 = shape"];
+    const setRule = () => { $("#csRule", host).textContent = RULES[phase]; say(["Sort by colour!", "Switch! Now sort by shape!", "Tricky! Look at the sign on each card."][phase]); };
+    const next = () => {
+      if (i >= PER * 3) { const rec = brainDone("cardsort", right, "Flexible thinker!", right >= 16 ? 3 : right >= 12 ? 2 : 1); host.innerHTML = resultBox(`${right} out of ${PER * 3}!`, "Switching rules is a super brain skill!", rec); $("#brAgain", host).onclick = cardsort; return; }
+      const np = Math.floor(i / PER); if (np !== phase) { phase = np; setRule(); }
+      const conflict = Math.random() < 0.75; cur = conflict ? (Math.random() < 0.5 ? ["red", "heart"] : ["blue", "star"]) : pick(BINS).slice();
+      rule = phase === 0 ? "colour" : phase === 1 ? "shape" : Math.random() < 0.5 ? "colour" : "shape";
+      i++; $("#csI", host).textContent = i;
+      $("#csCard", host).innerHTML = `${phase === 2 ? `<span class="cs-sign">${rule === "colour" ? "🎨" : "🔷"}</span>` : ""}${card(cur[0], cur[1])}`;
+      $("#csCard", host).className = "cs-card pop"; busy = false;
+    };
+    $$(".cs-bin", host).forEach(b => b.onclick = () => {
+      if (busy || !cur) return; busy = true; const bin = BINS[+b.dataset.b];
+      const ok = rule === "colour" ? bin[0] === cur[0] : bin[1] === cur[1];
+      if (ok) { right++; ding(); b.classList.add("right"); } else { bloop(); b.classList.add("wrong"); }
+      $("#csRight", host).textContent = right;
+      timers.push(later(() => { b.classList.remove("right", "wrong"); next(); }, 550));
+    });
+    setRule(); timers.push(later(next, 1500));
+  });
+}
+
+/* ---------- Listen & Count (auditory attention) ---------- */
+function countclaps() {
+  openActivity(host => {
+    let round = 0, right = 0, answer = 0, busy = true; const ROUNDS = 6, timers = [];
+    cleanup = () => timers.forEach(clearTimeout);
+    host.innerHTML = `<h3>Listen &amp; Count 👂</h3><p class="hint">Close your eyes and listen. How many sounds did you hear?</p>${langRow()}
+      <div class="lc-ear" id="lcEar">👂</div>
+      <div class="big-q" id="lcMsg">Press Start, then listen carefully.</div>
+      <div class="lc-nums" id="lcNums">${Array.from({ length: 9 }, (_, k) => `<button class="opt" data-n="${k + 1}">${k + 1}</button>`).join("")}</div>
+      <div class="ttt-score"><span>✅ <b id="lcRight">0</b></span><span>Round <b id="lcRound">0</b> / ${ROUNDS}</span></div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="lcGo">▶ Start</button><button class="btn white" id="lcAgain" hidden>🔁 Hear it again</button></div>`;
+    bindLang(host, () => BRML.countclaps);
+    let pattern = [], kind = "bell";
+    const snd = (k, t) => { const a = audio(); if (!a) return; if (k === "bell") { tone(1046, t, 0.6, "sine", 0.22); tone(2093, t, 0.3, "sine", 0.06); } else { tone(110, t, 0.18, "square", 0.18); tone(70, t, 0.25, "sine", 0.3); } };
+    const playIt = () => {
+      const a = audio(); if (!a) return; busy = true; $("#lcEar", host).classList.add("on"); $("#lcMsg", host).textContent = round > 3 ? "Count only the BELLS 🔔, not the drums 🥁!" : "Listen… 🤫";
+      let t = a.currentTime + 0.6; pattern.forEach(k => { snd(k, t); t += 0.45 + Math.random() * 0.35; });
+      timers.push(later(() => { $("#lcEar", host).classList.remove("on"); busy = false; $("#lcMsg", host).textContent = round > 3 ? "How many BELLS?" : "How many sounds?"; $("#lcAgain", host).hidden = false; }, (t - a.currentTime) * 1000 + 300));
+    };
+    const next = () => {
+      if (round >= ROUNDS) { const rec = brainDone("countclaps", right, "Super listener!", right >= 5 ? 3 : right >= 3 ? 2 : 1); host.innerHTML = resultBox(`${right} out of ${ROUNDS}!`, "Good listening helps you learn everything!", rec); $("#brAgain", host).onclick = countclaps; return; }
+      round++; $("#lcRound", host).textContent = round; $("#lcAgain", host).hidden = true;
+      if (round <= 3) { answer = rand(2, 3 + round); pattern = Array(answer).fill("bell"); }
+      else { answer = rand(2, 5); pattern = shuffle([...Array(answer).fill("bell"), ...Array(rand(1, 3)).fill("drum")]); }
+      timers.push(later(playIt, 700));
+    };
+    $("#lcNums", host).addEventListener("click", e => {
+      const b = e.target.closest("[data-n]"); if (!b || busy) return; busy = true;
+      if (+b.dataset.n === answer) { right++; ding(); b.classList.add("right"); $("#lcMsg", host).textContent = `Yes! ${answer}! 🎉`; } else { bloop(); b.classList.add("wrong"); $("#lcMsg", host).textContent = `It was ${answer}. Good try!`; }
+      $("#lcRight", host).textContent = right;
+      timers.push(later(() => { $$("#lcNums .opt", host).forEach(x => x.classList.remove("right", "wrong")); next(); }, 1400));
+    });
+    $("#lcAgain", host).onclick = () => { if (!busy) playIt(); };
+    $("#lcGo", host).onclick = () => { $("#lcGo", host).hidden = true; say("Close your eyes and count."); timers.push(later(next, 1500)); };
+  });
+}
+
+/* ---------- Calm Bubble (guided breathing) ---------- */
+function breathe() {
+  openActivity(host => {
+    const CUE = { en: ["Breathe in…", "Hold…", "Breathe out…"], ur: [{ ur: "سانس اندر لو", hi: "साँस अंदर लो", sd: "साह अंदर खणो" }, { ur: "روکو", hi: "रोको", sd: "रोकियो" }, { ur: "سانس باہر چھوڑو", hi: "साँस बाहर छोड़ो", sd: "साह बाहर छडियो" }] };
+    let lang = "en", breaths = 0, running = false, look = "bubble"; const N = 5, timers = [];
+    cleanup = () => { running = false; timers.forEach(clearTimeout); };
+    const LOOKS = { bubble: ["🫧", "Blow a big bubble"], balloon: ["🎈", "Fill a balloon"], flower: ["🌸", "Smell the flower, blow the candle"] };
+    host.innerHTML = `<h3>Calm Bubble 🫧</h3><p class="hint">Slow breaths help your brain feel calm and ready to focus. Follow the bubble!</p>
+      <div class="tabs" id="brLook">${Object.entries(LOOKS).map(([k, [ico, l]]) => `<button class="tab" data-l="${k}" aria-selected="${k === look}">${ico} ${l}</button>`).join("")}</div>
+      <div class="tabs" id="brLang"><button class="tab" data-g="en" aria-selected="true">English</button><button class="tab" data-g="ur" aria-selected="false">اردو Urdu</button><button class="tab" data-g="sd" aria-selected="false">سنڌي Sindhi</button></div>
+      <div class="br-stage"><div class="br-bubble" id="brB"><span id="brIco">🫧</span></div></div>
+      <div class="big-q" id="brMsg">Sit comfortably. Ready?</div>
+      <div class="br-dots" id="brDots">${Array.from({ length: N }, () => "<i></i>").join("")}</div>
+      <div class="btn-row" style="justify-content:center"><button class="btn go" id="brGo">▶ Start breathing</button></div>`;
+    const B = $("#brB", host), msg = t => ($("#brMsg", host).textContent = t);
+    const cue = k => { const text = CUE.en[k]; msg(lang === "en" ? text : ["Breathe in… 🌬️", "Hold… ✋", "Breathe out… 💨"][k]); if (lang === "en") say(text.replace("…", ""), accent, 0.7); else sayIn(lang, CUE.ur[k]); const a = audio(); if (a) tone([392, 523, 330][k], a.currentTime, 0.9, "sine", 0.06); };
+    const cycle = () => {
+      if (!running) return;
+      if (breaths >= N) { running = false; B.className = "br-bubble"; msg("You feel calm and ready to focus! 🌈"); addStar(); celebrate("Calm and ready!"); $("#brGo", host).hidden = false; $("#brGo", host).textContent = "▶ Breathe again"; return; }
+      cue(0); B.className = "br-bubble in";
+      timers.push(later(() => { cue(1); B.className = "br-bubble in hold"; timers.push(later(() => { cue(2); B.className = "br-bubble out"; timers.push(later(() => { breaths++; $$("#brDots i", host).forEach((d, k) => d.classList.toggle("done", k < breaths)); cycle(); }, 4500)); }, 2000)); }, 4000));
+    };
+    $("#brLook", host).addEventListener("click", e => { const b = e.target.closest("[data-l]"); if (!b) return; look = b.dataset.l; $$("#brLook .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); $("#brIco", host).textContent = LOOKS[look][0]; });
+    $("#brLang", host).addEventListener("click", e => { const b = e.target.closest("[data-g]"); if (!b) return; lang = b.dataset.g; $$("#brLang .tab", host).forEach(x => x.setAttribute("aria-selected", x === b)); });
+    $("#brGo", host).onclick = () => { breaths = 0; $$("#brDots i", host).forEach(d => d.classList.remove("done")); running = true; $("#brGo", host).hidden = true; cycle(); };
+  });
+}
 
 /* ======================= PUZZLES ======================= */
 const PZML = {
@@ -4220,7 +4587,11 @@ const MISSIONS = [
   ["Find the way through a maze", () => startGame("maze")],
   ["Play Fruit Sudoku", () => startGame("sudoku")],
   ["Spot the difference", () => startGame("spotdiff")],
-  ["Join the dots", () => startGame("dotdot")]
+  ["Join the dots", () => startGame("dotdot")],
+  ["Play Fruit or Bug?", () => startGame("gonogo")],
+  ["Take 5 calm breaths", () => startGame("breathe")],
+  ["Play Firefly Memory", () => startGame("firefly")],
+  ["Find It Fast", () => startGame("findfast")]
 ];
 (function renderMission() {
   const day = Math.floor(Date.now() / 86400000);
